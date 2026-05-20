@@ -10,12 +10,19 @@ type SearchParams = Promise<{ c?: string; to?: string; from?: string; note?: str
 export async function generateMetadata({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
   const card = getCard(sp.c).id;
+  const to = (sp.to ?? "").trim();
+  const from = (sp.from ?? "").trim();
 
-  /* Generic share preview — no recipient/sender personalisation in the thumbnail.
-     Only the card colour theme is carried through. */
-  const title = "Open Eid Gift";
-  const description = "A True ILM gift — 1 month of Islamic audiobooks & eBooks, on us.";
-  const ogImage = `/gift/og?c=${card}`;
+  const title = to ? `${to}, you've got an Eid gift` : "You've got an Eid gift";
+  const description = from
+    ? `${from} sent you a True ILM gift — 1 month of Islamic audiobooks & eBooks, on them.`
+    : "A True ILM gift — 1 month of Islamic audiobooks & eBooks, on us.";
+
+  /* OG image + canonical link carry the same gift params so the preview is personalised. */
+  const q = new URLSearchParams({ c: card });
+  if (to) q.set("to", to);
+  if (from) q.set("from", from);
+  const ogImage = `/gift/og?${q.toString()}`;
 
   return {
     title,
@@ -24,6 +31,7 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
       title,
       description,
       type: "website",
+      url: `/gift?${q.toString()}`,
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {

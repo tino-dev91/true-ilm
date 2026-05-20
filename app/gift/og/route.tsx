@@ -6,7 +6,6 @@ type Theme = {
   bg: string;
   text: string;
   accent: string;
-  greet: string;
   orb: string;
   orbCut: string;
   starOpacity: number;
@@ -17,7 +16,6 @@ const THEMES: Record<string, Theme> = {
     bg: "radial-gradient(circle at 50% 38%, #22306B 0%, #141E48 55%, #0A1129 100%)",
     text: "#FEF7E6",
     accent: "#EAC060",
-    greet: "#EAC060",
     orb: "#EAC060",
     orbCut: "#101A40",
     starOpacity: 0.9,
@@ -26,7 +24,6 @@ const THEMES: Record<string, Theme> = {
     bg: "linear-gradient(180deg, #FEF7E6 0%, #FAEBC8 55%, #F2D89A 100%)",
     text: "#192351",
     accent: "#C09940",
-    greet: "#192351",
     orb: "#EAC060",
     orbCut: "#FBEBC4",
     starOpacity: 0,
@@ -35,7 +32,6 @@ const THEMES: Record<string, Theme> = {
     bg: "linear-gradient(180deg, #FEF7E6 0%, #F9E8E1 60%, #F2D8D0 100%)",
     text: "#192351",
     accent: "#B07069",
-    greet: "#192351",
     orb: "#DC9A92",
     orbCut: "#FBEFEA",
     starOpacity: 0,
@@ -47,13 +43,13 @@ export async function GET(req: Request) {
   const id = searchParams.get("c") || "lantern";
   const theme = THEMES[id] ?? THEMES.lantern;
   const isDark = id === "lantern";
+  const to = (searchParams.get("to") || "").trim();
+  const from = (searchParams.get("from") || "").trim();
 
-  const [poppins, tajawal] = await Promise.all([
-    fetch(new URL("./Poppins-Bold.ttf", import.meta.url)).then((r) => r.arrayBuffer()),
-    fetch(new URL("./Tajawal-Bold.ttf", import.meta.url)).then((r) => r.arrayBuffer()),
-  ]);
+  const poppins = await fetch(new URL("./Poppins-Bold.ttf", import.meta.url)).then((r) =>
+    r.arrayBuffer(),
+  );
 
-  /* A few scattered stars for the night card */
   const stars = isDark
     ? [
         [120, 90, 5],
@@ -81,7 +77,6 @@ export async function GET(req: Request) {
           position: "relative",
         }}
       >
-        {/* stars */}
         {stars.map(([x, y, r], i) => (
           <div
             key={i}
@@ -126,35 +121,55 @@ export async function GET(req: Request) {
           )}
         </div>
 
-        {/* greeting */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontFamily: "Tajawal", fontSize: 64, color: theme.greet, lineHeight: 1 }}>
-            عيد مبارك
-          </div>
-          <div
-            style={{
-              fontSize: 20,
-              letterSpacing: 8,
-              color: theme.accent,
-              marginTop: 14,
-            }}
-          >
-            EID MUBARAK
-          </div>
+        {/* kicker */}
+        <div
+          style={{
+            display: "flex",
+            fontSize: 26,
+            letterSpacing: 10,
+            color: theme.accent,
+          }}
+        >
+          EID MUBARAK
         </div>
 
-        {/* headline — no personalisation */}
+        {/* recipient + sender */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontSize: 100,
+              fontSize: to ? 104 : 80,
               color: theme.text,
               lineHeight: 1.02,
               letterSpacing: -2,
             }}
           >
-            Open Eid Gift
+            {to ? `${to},` : "You've got"}
           </div>
+          <div
+            style={{
+              fontSize: to ? 60 : 80,
+              color: theme.text,
+              lineHeight: 1.05,
+              letterSpacing: -1.5,
+              opacity: to ? 0.9 : 1,
+              marginTop: to ? 4 : 0,
+            }}
+          >
+            {to ? "you've got an Eid gift." : "an Eid gift."}
+          </div>
+          {from && (
+            <div
+              style={{
+                display: "flex",
+                fontSize: 26,
+                letterSpacing: 4,
+                color: theme.accent,
+                marginTop: 22,
+              }}
+            >
+              {`A GIFT FROM ${from.toUpperCase()}`}
+            </div>
+          )}
         </div>
 
         {/* footer: wordmark + tagline */}
@@ -177,10 +192,7 @@ export async function GET(req: Request) {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        { name: "Poppins", data: poppins, weight: 700, style: "normal" },
-        { name: "Tajawal", data: tajawal, weight: 700, style: "normal" },
-      ],
+      fonts: [{ name: "Poppins", data: poppins, weight: 700, style: "normal" }],
     },
   );
 }
