@@ -1,27 +1,28 @@
 "use client";
 
 /* True ILM — Eid gift cards.
-   The card artwork is inlined as SVG (identical gift box across all three; only
-   the background colour differs) so the gift box can play a subtle loop
-   animation. The recipient/sender name is overlaid in the centre. */
+   Inlined SVG (shared gift box; background colour per variant) so the gift box
+   can play a subtle loop animation and carry a faint complementary grain. The
+   Eid Mubarak calligraphy sits small at the top-centre (recoloured per card for
+   contrast) with the recipient name below it. */
 
 import { useId } from "react";
 import { CARD_IDS, CARD_TITLES, type CardId } from "./card-data";
 
 export type { CardId } from "./card-data";
 
-/* Solid card background per design. */
-const CARD_BG: Record<CardId, string> = {
-  lantern: "#192351",
-  skyline: "#FFE8B3",
-  ornament: "#FBB1B8",
+/* Per-card: background + grain tint (rgb 0..1) for the subtle texture. */
+const CARD_CFG: Record<CardId, { bg: string; grain: [number, number, number] }> = {
+  lantern: { bg: "#192351", grain: [1, 1, 1] },
+  skyline: { bg: "#FFE8B3", grain: [0.5, 0.36, 0.08] },
+  ornament: { bg: "#FBB1B8", grain: [0.5, 0.18, 0.24] },
 };
 
-/* Per-card overlay colours (text + "a gift from" accent). */
-const OVERLAY_COLORS: Record<CardId, { color: string; accent: string; shadow: boolean }> = {
-  lantern: { color: "#FEF7E6", accent: "#F5D27A", shadow: true },
-  skyline: { color: "#192351", accent: "#B5742A", shadow: false },
-  ornament: { color: "#192351", accent: "#B5495A", shadow: false },
+/* Name colours + greeting (calligraphy) colour, chosen for contrast. */
+const OVERLAY_COLORS: Record<CardId, { color: string; accent: string; shadow: boolean; greet: string }> = {
+  lantern: { color: "#FEF7E6", accent: "#F5D27A", shadow: true, greet: "#FEF7E6" },
+  skyline: { color: "#192351", accent: "#B5742A", shadow: false, greet: "#192351" },
+  ornament: { color: "#192351", accent: "#B5495A", shadow: false, greet: "#192351" },
 };
 
 /* Card list for the colour picker (id + title). */
@@ -30,8 +31,7 @@ export const CARDS: { id: CardId; title: string }[] = CARD_IDS.map((id) => ({
   title: CARD_TITLES[id],
 }));
 
-/* The gift box paths — shared by every card variant. Wrapped in <g class="giftbox">
-   which carries the loop animation (see globals.css). */
+/* Shared gift box paths, wrapped in <g class="giftbox"> which carries the loop. */
 function GiftBox() {
   return (
     <g className="giftbox">
@@ -50,85 +50,70 @@ function GiftBox() {
   );
 }
 
-/* The full card: rounded background + animated gift box, clipped to the rounded
-   rect so corners stay transparent. clip id is namespaced per instance. */
-function GiftCard({ bg }: { bg: string }) {
-  const clipId = "cardclip-" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
+/* Rounded background + faint grain + animated gift box, clipped to the rounded
+   rect so corners stay transparent. ids namespaced per instance. */
+function GiftCard({ id }: { id: CardId }) {
+  const raw = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const clipId = "cc-" + raw;
+  const grainId = "cg-" + raw;
+  const { bg, grain } = CARD_CFG[id];
+  const [gr, gg, gb] = grain;
   return (
     <svg className="cardImg" viewBox="0 0 1008 704" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clipPath={`url(#${clipId})`}>
-        <rect width="1007.88" height="703.44" rx="50" fill={bg} />
-        <GiftBox />
-      </g>
       <defs>
         <clipPath id={clipId}>
           <rect width="1007.88" height="703.44" rx="50" fill="white" />
         </clipPath>
+        <filter id={grainId} x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch" />
+          <feColorMatrix values={`0 0 0 0 ${gr}  0 0 0 0 ${gg}  0 0 0 0 ${gb}  0 0 0 0.55 0`} />
+        </filter>
       </defs>
+      <g clipPath={`url(#${clipId})`}>
+        <rect width="1007.88" height="703.44" rx="50" fill={bg} />
+        <rect width="1007.88" height="703.44" filter={`url(#${grainId})`} opacity="0.06" />
+        <GiftBox />
+      </g>
     </svg>
   );
 }
 
-/* Name overlay drawn over the centre of the card. */
-function NameOverlay({
+/* All card text in one top-anchored column: the Eid Mubarak calligraphy
+   (small, recoloured per card), then the recipient name + sender. */
+function CardContent({
+  id,
   recipient,
   sender,
-  color,
-  accent,
-  shadow,
+  showOverlay,
 }: {
-  recipient: string;
-  sender: string;
-  color: string;
-  accent: string;
-  shadow: boolean;
+  id: CardId;
+  recipient?: string;
+  sender?: string;
+  showOverlay: boolean;
 }) {
+  const ov = OVERLAY_COLORS[id];
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        pointerEvents: "none",
-        padding: "0 8%",
-      }}
-    >
-      <div
-        style={{
-          fontFamily: "var(--font-body)",
-          fontWeight: 900,
-          fontSize: "min(8.5cqi, 76px)",
-          color,
-          lineHeight: 1.04,
-          letterSpacing: "-0.5px",
-          textAlign: "center",
-          textShadow: shadow ? "0 4px 16px rgba(0,0,0,0.3)" : "none",
-        }}
-      >
-        {recipient}
-      </div>
-      <div
-        style={{
-          marginTop: "1.6%",
-          fontFamily: "var(--font-body)",
-          fontWeight: 700,
-          fontSize: "min(2.8cqi, 26px)",
-          color: accent,
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-        }}
-      >
-        A gift from {sender}
-      </div>
+    <div className="card-content">
+      <span className="greet" style={{ backgroundColor: ov.greet }} role="img" aria-label="عيد مبارك Eid Mubarak" />
+      {showOverlay && recipient ? (
+        <>
+          <div
+            className="recip-name"
+            style={{ color: ov.color, textShadow: ov.shadow ? "0 4px 16px rgba(0,0,0,0.3)" : "none" }}
+          >
+            {recipient}
+          </div>
+          <div className="recip-from" style={{ color: ov.accent }}>
+            A gift from {sender}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }
 
-/* A card "frame" — the artwork plus an optional name overlay, fit to the parent.
-   container-type: inline-size powers the overlay's cqi font sizing. */
+/* A card "frame" — the artwork plus the text overlay, fit to the parent.
+   container-type: inline-size powers the cqi-based font sizing. */
 export function CardFrame({
   id,
   recipient,
@@ -142,13 +127,10 @@ export function CardFrame({
   showOverlay?: boolean;
   small?: boolean;
 }) {
-  const ov = OVERLAY_COLORS[id];
   return (
     <div className={"cardFrame" + (small ? " sm" : "")}>
-      <GiftCard bg={CARD_BG[id]} />
-      {showOverlay && recipient ? (
-        <NameOverlay recipient={recipient} sender={sender ?? ""} color={ov.color} accent={ov.accent} shadow={ov.shadow} />
-      ) : null}
+      <GiftCard id={id} />
+      <CardContent id={id} recipient={recipient} sender={sender} showOverlay={showOverlay} />
     </div>
   );
 }

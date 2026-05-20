@@ -85,6 +85,43 @@ button {
   }
 }
 
+/* Card text: Eid Mubarak calligraphy (small, top-centre) + name below. */
+.card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 7% 8% 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.greet {
+  display: block;
+  width: min(17cqi, 120px);
+  aspect-ratio: 431 / 442;
+  -webkit-mask: url(/eid-greeting.svg) center / contain no-repeat;
+  mask: url(/eid-greeting.svg) center / contain no-repeat;
+}
+.recip-name {
+  margin-top: 6%;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: min(8.5cqi, 76px);
+  line-height: 1.04;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+.recip-from {
+  margin-top: 1.4%;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: min(2.8cqi, 26px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
 /* ── Visibility helpers ──────────────────────────────────────────────── */
 /* Visibility utilities — !important so they always win over component
    display rules (e.g. .recv-page / .ds set their own display). */
