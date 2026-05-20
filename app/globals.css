@@ -51,6 +51,11 @@ button {
 .cardFrame.sm {
   border-radius: 6px;
 }
+.cardImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
 /* ── Visibility helpers ──────────────────────────────────────────────── */
 /* Visibility utilities — !important so they always win over component

@@ -12,6 +12,13 @@ export const CARD_TITLES: Record<CardId, string> = {
   ornament: "Blush",
 };
 
+/* Exported card artwork (2160x1080, 2:1) used as the gift-card background. */
+export const CARD_IMAGES: Record<CardId, string> = {
+  lantern: "/card-lantern.png",
+  skyline: "/card-skyline.png",
+  ornament: "/card-blush.png",
+};
+
 /** Returns a valid CardId, defaulting to "lantern" for anything unknown. */
 export function resolveCardId(id: string | null | undefined): CardId {
   return CARD_IDS.includes((id ?? "") as CardId) ? (id as CardId) : "lantern";
