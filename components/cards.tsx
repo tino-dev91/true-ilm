@@ -1,8 +1,14 @@
+"use client";
+
 /* True ILM — Eid Gift Cards (3 variants)
    Landscape 1200×600 SVG. Center zone left clear for overlaid recipient + sender name.
-   Brand palette only. Lantern mark from logo kept in original gold + navy. */
+   Brand palette only. Lantern mark from logo kept in original gold + navy.
 
-import React from "react";
+   Each card's SVG <defs> ids are namespaced with a per-instance `uid` (see CardFrame)
+   so the same card can be rendered multiple times on one page (e.g. desktop + mobile
+   layouts) without duplicate-id collisions that blank out url(#...) references. */
+
+import React, { useId } from "react";
 
 export const B = {
   navy: "#192351",
@@ -177,48 +183,49 @@ const cardSvgStyle: React.CSSProperties = { display: "block", width: "100%", hei
 /* ─────────────────────────────────────────────────────────────────────── */
 /* CARD 1 — Lantern Night                                                   */
 /* ─────────────────────────────────────────────────────────────────────── */
-function CardLanternNight() {
+function CardLanternNight({ uid }: { uid: string }) {
+  const u = (s: string) => uid + s;
   return (
     <svg viewBox={`0 0 ${CARD_W} ${CARD_H}`} xmlns="http://www.w3.org/2000/svg" style={cardSvgStyle}>
       <defs>
-        <radialGradient id="c1-bg" cx="50%" cy="55%" r="75%">
+        <radialGradient id={u("bg")} cx="50%" cy="55%" r="75%">
           <stop offset="0%" stopColor="#22306B" />
           <stop offset="55%" stopColor="#141E48" />
           <stop offset="100%" stopColor="#0A1129" />
         </radialGradient>
-        <radialGradient id="c1-lantern-halo" cx="50%" cy="50%" r="50%">
+        <radialGradient id={u("halo")} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor={B.goldLt} stopOpacity="0.55" />
           <stop offset="40%" stopColor={B.gold} stopOpacity="0.22" />
           <stop offset="100%" stopColor={B.gold} stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="c1-lantern-fill" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id={u("fill")} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={B.goldLt} />
           <stop offset="60%" stopColor={B.gold} />
           <stop offset="100%" stopColor={B.goldDp} />
         </linearGradient>
-        <radialGradient id="c1-lantern-core" cx="50%" cy="50%" r="50%">
+        <radialGradient id={u("core")} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#FFF1C2" />
           <stop offset="60%" stopColor={B.goldLt} />
           <stop offset="100%" stopColor={B.gold} />
         </radialGradient>
-        <radialGradient id="c1-moon" cx="35%" cy="35%" r="65%">
+        <radialGradient id={u("moon")} cx="35%" cy="35%" r="65%">
           <stop offset="0%" stopColor={B.goldLt} />
           <stop offset="80%" stopColor={B.gold} />
           <stop offset="100%" stopColor={B.goldDp} />
         </radialGradient>
-        <filter id="c1-grain" x="0" y="0" width="100%" height="100%">
+        <filter id={u("grain")} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="5" />
           <feColorMatrix values="0 0 0 0 0.92  0 0 0 0 0.75  0 0 0 0 0.38  0 0 0 0.06 0" />
         </filter>
-        <filter id="c1-grain-dark" x="0" y="0" width="100%" height="100%">
+        <filter id={u("grainDark")} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="9" />
           <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.30 0" />
         </filter>
       </defs>
 
-      <rect width={CARD_W} height={CARD_H} fill="url(#c1-bg)" />
-      <rect width={CARD_W} height={CARD_H} filter="url(#c1-grain-dark)" />
-      <rect width={CARD_W} height={CARD_H} filter="url(#c1-grain)" style={{ mixBlendMode: "screen" }} />
+      <rect width={CARD_W} height={CARD_H} fill={`url(#${u("bg")})`} />
+      <rect width={CARD_W} height={CARD_H} filter={`url(#${u("grainDark")})`} />
+      <rect width={CARD_W} height={CARD_H} filter={`url(#${u("grain")})`} style={{ mixBlendMode: "screen" }} />
 
       <ellipse cx={CARD_W / 2} cy={CARD_H / 2 + 20} rx="320" ry="120" fill={B.gold} opacity="0.05" />
 
@@ -249,8 +256,8 @@ function CardLanternNight() {
       {/* Crescent moon, top-right */}
       <g transform={`translate(${CARD_W - 200} 200)`}>
         <circle cx="0" cy="0" r="80" fill={B.gold} opacity="0.08" />
-        <circle cx="0" cy="0" r="58" fill="url(#c1-moon)" />
-        <circle cx="22" cy="-10" r="50" fill="url(#c1-bg)" />
+        <circle cx="0" cy="0" r="58" fill={`url(#${u("moon")})`} />
+        <circle cx="22" cy="-10" r="50" fill={`url(#${u("bg")})`} />
         <ellipse cx="-10" cy="-12" rx="8" ry="6" fill={B.goldDp} opacity="0.3" />
         <ellipse cx="-22" cy="10" rx="5" ry="4" fill={B.goldDp} opacity="0.25" />
         <ellipse cx="-3" cy="22" rx="6" ry="5" fill={B.goldDp} opacity="0.25" />
@@ -258,13 +265,13 @@ function CardLanternNight() {
 
       {/* Large hanging lantern on the LEFT */}
       <g transform={`translate(190 320)`}>
-        <circle cx="0" cy="0" r="230" fill="url(#c1-lantern-halo)" />
+        <circle cx="0" cy="0" r="230" fill={`url(#${u("halo")})`} />
         <line x1="0" y1="-200" x2="0" y2="-130" stroke={B.gold} strokeWidth="1.5" opacity="0.6" />
         <circle cx="0" cy="-205" r="3" fill={B.gold} opacity="0.7" />
         <g>
-          <rect x="-7" y="-135" width="14" height="10" rx="3" fill="url(#c1-lantern-fill)" />
-          <path d="M-22 -125 Q0 -140 22 -125 L22 -118 Q0 -130 -22 -118 Z" fill="url(#c1-lantern-fill)" />
-          <rect x="-25" y="-118" width="50" height="9" rx="3" fill="url(#c1-lantern-fill)" />
+          <rect x="-7" y="-135" width="14" height="10" rx="3" fill={`url(#${u("fill")})`} />
+          <path d="M-22 -125 Q0 -140 22 -125 L22 -118 Q0 -130 -22 -118 Z" fill={`url(#${u("fill")})`} />
+          <rect x="-25" y="-118" width="50" height="9" rx="3" fill={`url(#${u("fill")})`} />
           <circle cx="0" cy="-145" r="3" fill={B.goldLt} />
         </g>
         <path
@@ -273,13 +280,13 @@ function CardLanternNight() {
           stroke={B.gold}
           strokeWidth="2.5"
         />
-        <ellipse cx="0" cy="-50" rx="18" ry="32" fill="url(#c1-lantern-core)" opacity="0.85" />
+        <ellipse cx="0" cy="-50" rx="18" ry="32" fill={`url(#${u("core")})`} opacity="0.85" />
         <ellipse cx="0" cy="-50" rx="9" ry="20" fill="#FFF8DC" opacity="0.9" />
         <line x1="-28" y1="-80" x2="28" y2="-80" stroke={B.gold} strokeWidth="1.5" opacity="0.7" />
         <line x1="-29" y1="-25" x2="29" y2="-25" stroke={B.gold} strokeWidth="1.5" opacity="0.7" />
         <line x1="-13" y1="-109" x2="-15" y2="8" stroke={B.gold} strokeWidth="1" opacity="0.55" />
         <line x1="13" y1="-109" x2="15" y2="8" stroke={B.gold} strokeWidth="1" opacity="0.55" />
-        <rect x="-30" y="8" width="60" height="10" rx="3" fill="url(#c1-lantern-fill)" />
+        <rect x="-30" y="8" width="60" height="10" rx="3" fill={`url(#${u("fill")})`} />
         <path d="M-22 18 L-18 30 L18 30 L22 18 Z" fill={B.goldDp} />
         <circle cx="0" cy="36" r="3" fill={B.gold} />
       </g>
@@ -326,47 +333,48 @@ function CardLanternNight() {
 /* ─────────────────────────────────────────────────────────────────────── */
 /* CARD 2 — Heritage Skyline                                                */
 /* ─────────────────────────────────────────────────────────────────────── */
-function CardHeritageSkyline() {
+function CardHeritageSkyline({ uid }: { uid: string }) {
+  const u = (s: string) => uid + s;
   return (
     <svg viewBox={`0 0 ${CARD_W} ${CARD_H}`} xmlns="http://www.w3.org/2000/svg" style={cardSvgStyle}>
       <defs>
-        <linearGradient id="c2-sky" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={u("sky")} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#FEF7E6" />
           <stop offset="55%" stopColor="#FAEBC8" />
           <stop offset="100%" stopColor="#F2D89A" />
         </linearGradient>
-        <radialGradient id="c2-sun" cx="50%" cy="50%" r="50%">
+        <radialGradient id={u("sun")} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#FFF1C2" />
           <stop offset="55%" stopColor={B.goldLt} />
           <stop offset="100%" stopColor={B.gold} />
         </radialGradient>
-        <radialGradient id="c2-sunhalo" cx="50%" cy="50%" r="50%">
+        <radialGradient id={u("sunhalo")} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor={B.gold} stopOpacity="0.35" />
           <stop offset="100%" stopColor={B.gold} stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="c2-skyline" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={u("skyline")} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#1F2A5F" />
           <stop offset="100%" stopColor="#0A1129" />
         </linearGradient>
-        <filter id="c2-grain-warm" x="0" y="0" width="100%" height="100%">
+        <filter id={u("grainWarm")} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="2" seed="11" />
           <feColorMatrix values="0 0 0 0 0.55  0 0 0 0 0.40  0 0 0 0 0.18  0 0 0 0.12 0" />
         </filter>
-        <filter id="c2-grain-skyline" x="0" y="0" width="100%" height="100%">
+        <filter id={u("grainSkyline")} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="2" seed="13" />
           <feColorMatrix values="0 0 0 0 0.92  0 0 0 0 0.75  0 0 0 0 0.38  0 0 0 0.16 0" />
           <feComposite in2="SourceGraphic" operator="in" />
         </filter>
       </defs>
 
-      <rect width={CARD_W} height={CARD_H} fill="url(#c2-sky)" />
-      <rect width={CARD_W} height={CARD_H} filter="url(#c2-grain-warm)" opacity="0.9" />
+      <rect width={CARD_W} height={CARD_H} fill={`url(#${u("sky")})`} />
+      <rect width={CARD_W} height={CARD_H} filter={`url(#${u("grainWarm")})`} opacity="0.9" />
 
       <g transform={`translate(${CARD_W - 220} 200)`}>
-        <circle cx="0" cy="0" r="200" fill="url(#c2-sunhalo)" />
-        <circle cx="0" cy="0" r="120" fill="url(#c2-sunhalo)" opacity="0.5" />
-        <circle cx="0" cy="0" r="68" fill="url(#c2-sun)" />
-        <circle cx="24" cy="-12" r="58" fill="url(#c2-sky)" />
+        <circle cx="0" cy="0" r="200" fill={`url(#${u("sunhalo")})`} />
+        <circle cx="0" cy="0" r="120" fill={`url(#${u("sunhalo")})`} opacity="0.5" />
+        <circle cx="0" cy="0" r="68" fill={`url(#${u("sun")})`} />
+        <circle cx="24" cy="-12" r="58" fill={`url(#${u("sky")})`} />
         <g style={{ mixBlendMode: "multiply" }}>
           <ellipse cx="-15" cy="10" rx="10" ry="7" fill={B.goldDp} opacity="0.18" />
           <ellipse cx="-25" cy="-12" rx="6" ry="5" fill={B.goldDp} opacity="0.14" />
@@ -427,7 +435,7 @@ function CardHeritageSkyline() {
           opacity="0.25"
         />
 
-        <g fill="url(#c2-skyline)" opacity="0.45">
+        <g fill={`url(#${u("skyline")})`} opacity="0.45">
           <rect x="50" y="110" width="20" height="150" />
           <path d="M60 100 L72 110 L48 110 Z" />
           <circle cx="60" cy="98" r="6" />
@@ -439,7 +447,7 @@ function CardHeritageSkyline() {
           <rect x="510" y="170" width="60" height="90" />
         </g>
 
-        <g fill="url(#c2-skyline)">
+        <g fill={`url(#${u("skyline")})`}>
           <rect x="380" y="40" width="18" height="220" />
           <path d="M389 30 L400 40 L378 40 Z" />
           <rect x="383" y="60" width="12" height="6" />
@@ -447,18 +455,18 @@ function CardHeritageSkyline() {
           <line x1="389" y1="21" x2="389" y2="10" stroke={B.navy} strokeWidth="2" />
           <path d="M385 10 L393 10 L389 4 Z" fill={B.navy} />
           <path d="M460 130 Q460 95 490 95 Q520 95 520 130 L520 260 L460 260 Z" />
-          <rect x="475" y="160" width="10" height="100" fill="url(#c2-sky)" opacity="0.25" />
-          <rect x="497" y="160" width="10" height="100" fill="url(#c2-sky)" opacity="0.25" />
+          <rect x="475" y="160" width="10" height="100" fill={`url(#${u("sky")})`} opacity="0.25" />
+          <rect x="497" y="160" width="10" height="100" fill={`url(#${u("sky")})`} opacity="0.25" />
           <path d="M540 100 Q540 30 620 30 Q700 30 700 100 L700 260 L540 260 Z" />
           <g transform="translate(620 12) scale(0.9)">
             <path d="M0 -10 A10 10 0 1 1 -3 9 A7 7 0 1 0 0 -10 Z" fill={B.gold} />
           </g>
           <line x1="620" y1="22" x2="620" y2="34" stroke={B.gold} strokeWidth="2" />
-          <path d="M580 160 Q580 140 595 140 Q610 140 610 160 L610 200 L580 200 Z" fill="url(#c2-sky)" opacity="0.22" />
-          <path d="M630 160 Q630 140 645 140 Q660 140 660 160 L660 200 L630 200 Z" fill="url(#c2-sky)" opacity="0.22" />
+          <path d="M580 160 Q580 140 595 140 Q610 140 610 160 L610 200 L580 200 Z" fill={`url(#${u("sky")})`} opacity="0.22" />
+          <path d="M630 160 Q630 140 645 140 Q660 140 660 160 L660 200 L630 200 Z" fill={`url(#${u("sky")})`} opacity="0.22" />
           <path d="M720 130 Q720 95 750 95 Q780 95 780 130 L780 260 L720 260 Z" />
-          <rect x="735" y="160" width="10" height="100" fill="url(#c2-sky)" opacity="0.25" />
-          <rect x="757" y="160" width="10" height="100" fill="url(#c2-sky)" opacity="0.25" />
+          <rect x="735" y="160" width="10" height="100" fill={`url(#${u("sky")})`} opacity="0.25" />
+          <rect x="757" y="160" width="10" height="100" fill={`url(#${u("sky")})`} opacity="0.25" />
           <rect x="840" y="40" width="18" height="220" />
           <path d="M849 30 L860 40 L838 40 Z" />
           <rect x="843" y="60" width="12" height="6" />
@@ -467,7 +475,7 @@ function CardHeritageSkyline() {
           <path d="M845 10 L853 10 L849 4 Z" fill={B.navy} />
         </g>
 
-        <g fill="url(#c2-skyline)" opacity="0.55">
+        <g fill={`url(#${u("skyline")})`} opacity="0.55">
           <rect x="900" y="170" width="70" height="90" />
           <path d="M935 158 Q935 130 960 130 Q985 130 985 158 L985 175 L935 175 Z" />
           <rect x="1000" y="140" width="50" height="120" />
@@ -478,7 +486,7 @@ function CardHeritageSkyline() {
           <rect x="1170" y="180" width="30" height="80" />
         </g>
 
-        <rect x="0" y="0" width={CARD_W} height="260" filter="url(#c2-grain-skyline)" />
+        <rect x="0" y="0" width={CARD_W} height="260" filter={`url(#${u("grainSkyline")})`} />
       </g>
 
       <TrueILMLockup x={42} y={36} width={120} />
@@ -489,7 +497,8 @@ function CardHeritageSkyline() {
 /* ─────────────────────────────────────────────────────────────────────── */
 /* CARD 3 — Blush (feminine, harmonised with navy + cream + gold)           */
 /* ─────────────────────────────────────────────────────────────────────── */
-function CardGildedOrnament() {
+function CardGildedOrnament({ uid }: { uid: string }) {
+  const u = (s: string) => uid + s;
   const navy = "#192351";
   const cream = "#FEF7E6";
   const gold = "#EAC060";
@@ -501,26 +510,26 @@ function CardGildedOrnament() {
   return (
     <svg viewBox={`0 0 ${CARD_W} ${CARD_H}`} xmlns="http://www.w3.org/2000/svg" style={cardSvgStyle}>
       <defs>
-        <linearGradient id="c3-bg" x1="0" y1="0" x2="0" y2={CARD_H} gradientUnits="userSpaceOnUse">
+        <linearGradient id={u("bg")} x1="0" y1="0" x2="0" y2={CARD_H} gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor={cream} />
           <stop offset="60%" stopColor={blushLt} />
           <stop offset="100%" stopColor={blush} />
         </linearGradient>
-        <radialGradient id="c3-center-glow" cx="50%" cy="50%" r="55%">
+        <radialGradient id={u("glow")} cx="50%" cy="50%" r="55%">
           <stop offset="0%" stopColor={cream} stopOpacity="0.95" />
           <stop offset="60%" stopColor={cream} stopOpacity="0.35" />
           <stop offset="100%" stopColor={cream} stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="c3-petal-grad" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={u("petalGrad")} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={blushLt} />
           <stop offset="100%" stopColor={pink} />
         </linearGradient>
-        <filter id="c3-grain" x="0" y="0" width="100%" height="100%">
+        <filter id={u("grain")} x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="2" seed="17" />
           <feColorMatrix values="0 0 0 0 0.10  0 0 0 0 0.14  0 0 0 0 0.32  0 0 0 0.08 0" />
         </filter>
 
-        <pattern id="c3-vine" x="0" y="0" width="120" height="60" patternUnits="userSpaceOnUse">
+        <pattern id={u("vine")} x="0" y="0" width="120" height="60" patternUnits="userSpaceOnUse">
           <g fill="none" stroke={navy} strokeWidth="1.4" strokeLinecap="round">
             <path d="M0 30 Q30 0 60 30 T120 30" opacity="0.85" />
             <ellipse cx="30" cy="14" rx="5" ry="3" fill={pink} stroke="none" opacity="0.85" transform="rotate(-30 30 14)" />
@@ -531,15 +540,15 @@ function CardGildedOrnament() {
           </g>
         </pattern>
 
-        <symbol id="c3-petal" viewBox="0 0 40 40">
+        <symbol id={u("petal")} viewBox="0 0 40 40">
           <path
             d="M20 4 Q26 12 26 20 Q26 28 20 36 Q14 28 14 20 Q14 12 20 4 Z"
-            fill="url(#c3-petal-grad)"
+            fill={`url(#${u("petalGrad")})`}
             opacity="0.7"
           />
         </symbol>
 
-        <symbol id="c3-bloom" viewBox="0 0 60 60">
+        <symbol id={u("bloom")} viewBox="0 0 60 60">
           {[0, 45, 90, 135, 180, 225, 270, 315].map((a, i) => (
             <ellipse
               key={i}
@@ -547,7 +556,7 @@ function CardGildedOrnament() {
               cy="14"
               rx="6"
               ry="11"
-              fill="url(#c3-petal-grad)"
+              fill={`url(#${u("petalGrad")})`}
               opacity="0.85"
               transform={`rotate(${a} 30 30)`}
             />
@@ -557,23 +566,23 @@ function CardGildedOrnament() {
         </symbol>
       </defs>
 
-      <rect width={CARD_W} height={CARD_H} fill="url(#c3-bg)" />
-      <rect width={CARD_W} height={CARD_H} filter="url(#c3-grain)" opacity="0.6" />
-      <rect width={CARD_W} height={CARD_H} fill="url(#c3-center-glow)" />
+      <rect width={CARD_W} height={CARD_H} fill={`url(#${u("bg")})`} />
+      <rect width={CARD_W} height={CARD_H} filter={`url(#${u("grain")})`} opacity="0.6" />
+      <rect width={CARD_W} height={CARD_H} fill={`url(#${u("glow")})`} />
 
       <rect x="22" y="22" width={CARD_W - 44} height={CARD_H - 44} fill="none" stroke={navy} strokeWidth="1" opacity="0.45" />
       <rect x="32" y="32" width={CARD_W - 64} height={CARD_H - 64} fill="none" stroke={navy} strokeWidth="0.5" opacity="0.25" />
 
       <g>
-        <rect x="60" y="58" width={CARD_W - 120} height="16" fill="url(#c3-vine)" opacity="0.85" />
-        <rect x={CARD_W / 2 - 90} y="46" width="180" height="40" fill="url(#c3-bg)" />
-        <use href="#c3-bloom" x={CARD_W / 2 - 18} y={48} width="36" height="36" />
+        <rect x="60" y="58" width={CARD_W - 120} height="16" fill={`url(#${u("vine")})`} opacity="0.85" />
+        <rect x={CARD_W / 2 - 90} y="46" width="180" height="40" fill={`url(#${u("bg")})`} />
+        <use href={`#${u("bloom")}`} x={CARD_W / 2 - 18} y={48} width="36" height="36" />
         <EightStar x={CARD_W / 2 - 62} y={66} r={6} color={navy} opacity={0.6} />
         <EightStar x={CARD_W / 2 + 62} y={66} r={6} color={navy} opacity={0.6} />
       </g>
 
       <g>
-        <rect x="60" y={CARD_H - 76} width={CARD_W - 120} height="16" fill="url(#c3-vine)" opacity="0.85" />
+        <rect x="60" y={CARD_H - 76} width={CARD_W - 120} height="16" fill={`url(#${u("vine")})`} opacity="0.85" />
       </g>
 
       {(
@@ -605,10 +614,10 @@ function CardGildedOrnament() {
       <circle cx={CARD_W / 2 - 220} cy={CARD_H - 130} r="3" fill={gold} opacity="0.85" />
       <circle cx={CARD_W / 2 + 220} cy={CARD_H - 130} r="3" fill={gold} opacity="0.85" />
 
-      <use href="#c3-petal" x={210} y={210} width={26} height={26} transform="rotate(-25 223 223)" />
-      <use href="#c3-petal" x={CARD_W - 240} y={360} width={30} height={30} transform="rotate(30 1184 375)" />
-      <use href="#c3-petal" x={CARD_W / 2 - 360} y={420} width={20} height={20} transform="rotate(-10 250 430)" />
-      <use href="#c3-petal" x={CARD_W / 2 + 330} y={170} width={18} height={18} transform="rotate(15 939 179)" />
+      <use href={`#${u("petal")}`} x={210} y={210} width={26} height={26} transform="rotate(-25 223 223)" />
+      <use href={`#${u("petal")}`} x={CARD_W - 240} y={360} width={30} height={30} transform="rotate(30 1184 375)" />
+      <use href={`#${u("petal")}`} x={CARD_W / 2 - 360} y={420} width={20} height={20} transform="rotate(-10 250 430)" />
+      <use href={`#${u("petal")}`} x={CARD_W / 2 + 330} y={170} width={18} height={18} transform="rotate(15 939 179)" />
 
       <Spark3 x={CARD_W / 2 - 280} y={250} size={11} color={gold} rotate={-15} />
       <Spark3 x={CARD_W / 2 + 280} y={350} size={11} color={gold} rotate={20} />
@@ -771,7 +780,7 @@ type OverlayProps = { recipient: string; sender: string; color?: string; accent?
 export interface CardMeta {
   id: CardId;
   title: string;
-  Card: React.ComponentType;
+  Card: React.ComponentType<{ uid: string }>;
   Overlay: React.ComponentType<OverlayProps>;
 }
 
@@ -791,7 +800,8 @@ export function getCard(id: string | null | undefined): CardMeta {
   return CARDS.find((c) => c.id === id) ?? CARDS[0];
 }
 
-/* A card "frame" — SVG plus optional name overlay, fit to the parent */
+/* A card "frame" — SVG plus optional name overlay, fit to the parent.
+   useId() namespaces this instance's SVG defs so multiple copies don't collide. */
 export function CardFrame({
   id,
   recipient,
@@ -805,12 +815,14 @@ export function CardFrame({
   showOverlay?: boolean;
   small?: boolean;
 }) {
+  const rawId = useId();
+  const uid = rawId.replace(/[^a-zA-Z0-9_-]/g, "") + "-";
   const meta = getCard(id);
   const ov = OVERLAY_COLORS[meta.id];
   const { Card, Overlay } = meta;
   return (
     <div className={"cardFrame" + (small ? " sm" : "")}>
-      <Card />
+      <Card uid={uid} />
       {showOverlay && recipient ? (
         <Overlay recipient={recipient} sender={sender ?? ""} color={ov.color} accent={ov.accent} shadow={ov.shadow} />
       ) : null}
