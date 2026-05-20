@@ -55,6 +55,9 @@ button {
   display: block;
   width: 100%;
   height: auto;
+  /* Hard-lock the artwork to its true 2:1 ratio so nothing can squeeze it. */
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
 }
 
 /* ── Visibility helpers ──────────────────────────────────────────────── */
@@ -76,8 +79,8 @@ button {
 /* MOBILE — cream-first gift-card page                                    */
 /* ════════════════════════════════════════════════════════════════════ */
 .phone {
-  width: 380px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 440px;
   margin: 0 auto;
   background: var(--cream);
   min-height: 100vh;
