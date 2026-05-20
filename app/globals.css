@@ -51,15 +51,17 @@ button {
 }
 
 /* ── Visibility helpers ──────────────────────────────────────────────── */
+/* Visibility utilities — !important so they always win over component
+   display rules (e.g. .recv-page / .ds set their own display). */
 .desktop-only {
-  display: none;
+  display: none !important;
 }
 @media (min-width: 980px) {
   .desktop-only {
-    display: flex;
+    display: flex !important;
   }
   .mobile-only {
-    display: none;
+    display: none !important;
   }
 }
 
