@@ -9,6 +9,9 @@
    layouts) without duplicate-id collisions that blank out url(#...) references. */
 
 import React, { useId } from "react";
+import { CARD_TITLES, type CardId } from "./card-data";
+
+export type { CardId } from "./card-data";
 
 export const B = {
   navy: "#192351",
@@ -24,8 +27,6 @@ export const B = {
 
 export const CARD_W = 1200;
 export const CARD_H = 600;
-
-export type CardId = "lantern" | "skyline" | "ornament";
 
 /* ── shared decorative bits ─────────────────────────────────────────────── */
 
@@ -791,9 +792,9 @@ const OVERLAY_COLORS: Record<CardId, { color: string; accent: string; shadow: bo
 };
 
 export const CARDS: CardMeta[] = [
-  { id: "lantern", title: "Lantern Night", Card: CardLanternNight, Overlay: NameOverlay },
-  { id: "skyline", title: "Heritage Skyline", Card: CardHeritageSkyline, Overlay: SkylineOverlay },
-  { id: "ornament", title: "Blush", Card: CardGildedOrnament, Overlay: NameOverlay },
+  { id: "lantern", title: CARD_TITLES.lantern, Card: CardLanternNight, Overlay: NameOverlay },
+  { id: "skyline", title: CARD_TITLES.skyline, Card: CardHeritageSkyline, Overlay: SkylineOverlay },
+  { id: "ornament", title: CARD_TITLES.ornament, Card: CardGildedOrnament, Overlay: NameOverlay },
 ];
 
 export function getCard(id: string | null | undefined): CardMeta {

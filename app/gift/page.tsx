@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CardFrame, getCard, type CardId } from "@/components/cards";
+import { CardFrame } from "@/components/cards";
+import { resolveCardId } from "@/components/card-data";
 import { BooksMarquee } from "@/components/BooksMarquee";
 import { ArrowIcon } from "@/components/icons";
 import { DEFAULT_NOTE } from "@/lib/gift";
@@ -9,7 +10,7 @@ type SearchParams = Promise<{ c?: string; to?: string; from?: string; note?: str
 
 export async function generateMetadata({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
-  const card = getCard(sp.c).id;
+  const card = resolveCardId(sp.c);
   const to = (sp.to ?? "").trim();
   const from = (sp.from ?? "").trim();
 
@@ -45,7 +46,7 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
 
 export default async function GiftPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
-  const card = getCard(sp.c).id as CardId;
+  const card = resolveCardId(sp.c);
   const to = (sp.to ?? "").trim();
   const from = (sp.from ?? "").trim();
   const note = (sp.note ?? "").trim() || DEFAULT_NOTE;
