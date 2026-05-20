@@ -96,7 +96,7 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
             <div className="recv-stats">{stats}</div>
 
             <div className="recv-claim">
-              <a className="recv-cta-btn" href="https://trueilm.com" target="_blank" rel="noopener noreferrer">
+              <a className="recv-cta-btn" href="https://redirect.appmetrica.yandex.com/serve/821977019486082306" target="_blank" rel="noopener noreferrer">
                 Claim your free month
                 <ArrowIcon stroke="#EAC060" />
               </a>
@@ -163,7 +163,7 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
           <div className="recv-stats">{stats}</div>
 
           <div className="recv-cta">
-            <a className="recv-cta-btn" href="https://trueilm.com" target="_blank" rel="noopener noreferrer">
+            <a className="recv-cta-btn" href="https://redirect.appmetrica.yandex.com/serve/821977019486082306" target="_blank" rel="noopener noreferrer">
               Claim your free month
               <ArrowIcon stroke="#EAC060" />
             </a>
