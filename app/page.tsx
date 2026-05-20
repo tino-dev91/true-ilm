@@ -43,11 +43,16 @@ export default function Home() {
   const previewName = to || "Fatimah";
   const previewSender = from || "Abdullah";
 
+  /* Step 2 requires both names before the gift can be sent. */
+  const namesFilled = to.trim() !== "" && from.trim() !== "";
+  const canProceed = step === 1 || namesFilled;
+
   function handlePrimary() {
     if (step === 1) {
       setStep(2);
       return;
     }
+    if (!namesFilled) return;
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = buildGiftUrl(gift, origin);
     setGiftUrl(url);
@@ -176,6 +181,7 @@ export default function Home() {
                 <label htmlFor="d-note">Add a note</label>
                 <textarea id="d-note" value={note} onChange={(e) => setNote(e.target.value)} placeholder={DEFAULT_NOTE} />
               </div>
+              {!namesFilled && <p className="send-hint">Add both names to send your gift.</p>}
             </>
           )}
 
@@ -190,7 +196,7 @@ export default function Home() {
               ) : (
                 <div />
               )}
-              <button className="ds-next" onClick={handlePrimary}>
+              <button className="ds-next" onClick={handlePrimary} disabled={!canProceed}>
                 {ctaLabel(step, method)} →
               </button>
             </div>
@@ -282,6 +288,7 @@ export default function Home() {
                 <label htmlFor="m-note">Add a note</label>
                 <textarea id="m-note" value={note} onChange={(e) => setNote(e.target.value)} placeholder="A short Eid message for them" />
               </div>
+              {!namesFilled && <p className="send-hint">Add both names to send your gift.</p>}
             </div>
           </>
         )}
@@ -295,7 +302,7 @@ export default function Home() {
                 ← Back
               </button>
             )}
-            <button className="cta" onClick={handlePrimary}>
+            <button className="cta" onClick={handlePrimary} disabled={!canProceed}>
               {step === 2 && method === "whatsapp" && <WhatsAppIcon />}
               {ctaLabel(step, method)}
             </button>

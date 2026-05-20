@@ -364,6 +364,22 @@ button {
   display: block;
 }
 
+/* Disabled send buttons (names not yet filled) */
+.cta:disabled,
+.ds-next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.send-hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-dp);
+}
+
 .phone .trust {
   display: flex;
   align-items: center;
