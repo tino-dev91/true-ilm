@@ -46,8 +46,6 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("c") || "lantern";
   const theme = THEMES[id] ?? THEMES.lantern;
-  const to = (searchParams.get("to") || "").trim();
-  const from = (searchParams.get("from") || "").trim();
   const isDark = id === "lantern";
 
   const [poppins, tajawal] = await Promise.all([
@@ -145,43 +143,18 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        {/* recipient + sender */}
+        {/* headline — no personalisation */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
-              fontSize: to ? 104 : 76,
+              fontSize: 100,
               color: theme.text,
               lineHeight: 1.02,
               letterSpacing: -2,
             }}
           >
-            {to ? `${to},` : "You've got"}
+            Open Eid Gift
           </div>
-          <div
-            style={{
-              fontSize: to ? 60 : 76,
-              color: theme.text,
-              lineHeight: 1.05,
-              letterSpacing: -1.5,
-              opacity: to ? 0.9 : 1,
-              marginTop: to ? 4 : 0,
-            }}
-          >
-            {to ? "you've got an Eid gift." : "an Eid gift."}
-          </div>
-          {from && (
-            <div
-              style={{
-                display: "flex",
-                fontSize: 26,
-                letterSpacing: 4,
-                color: theme.accent,
-                marginTop: 22,
-              }}
-            >
-              {`A GIFT FROM ${from.toUpperCase()}`}
-            </div>
-          )}
         </div>
 
         {/* footer: wordmark + tagline */}
