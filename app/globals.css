@@ -521,7 +521,7 @@ button {
   align-items: flex-start;
   height: 130px;
   width: max-content;
-  animation: bookslide 30s linear infinite;
+  animation: bookslide 48s linear infinite;
 }
 .books-track img {
   height: 130px;
