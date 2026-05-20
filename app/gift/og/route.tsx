@@ -109,7 +109,7 @@ export async function GET(req: Request) {
         >
           <div style={{ fontSize: 34, letterSpacing: 2, color: theme.text }}>TRUE ILM</div>
           <div style={{ fontSize: 22, color: theme.accent, letterSpacing: 1 }}>
-            1 month of True ILM Pro · on us
+            1 month of True ILM Pro for free
           </div>
         </div>
       </div>
