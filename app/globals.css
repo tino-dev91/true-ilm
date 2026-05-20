@@ -526,8 +526,8 @@ button {
 .books-track img {
   height: 130px;
   width: auto;
-  /* Pin the strip's true ratio (6755x203) so it can never stretch/warp. */
-  aspect-ratio: 6755 / 203;
+  /* Pin the strip's true ratio (13510x406) so it can never stretch/warp. */
+  aspect-ratio: 13510 / 406;
   display: block;
   flex: 0 0 auto;
   /* Matches the in-strip inter-book gap (42px native ≈ 27px @130h) so the loop
