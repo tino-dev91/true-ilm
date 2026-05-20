@@ -133,10 +133,10 @@ button {
   /* Slim diagonal sheen only — keeps the card's true colour vivid. */
   background: linear-gradient(
     127deg,
-    rgba(255, 255, 255, 0.13) 0%,
-    rgba(255, 255, 255, 0) 17%,
-    rgba(255, 255, 255, 0.09) 38%,
-    rgba(255, 255, 255, 0) 48%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0) 16%,
+    rgba(255, 255, 255, 0.05) 38%,
+    rgba(255, 255, 255, 0) 47%
   );
 }
 .card-finish::after {
@@ -147,7 +147,7 @@ button {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 150px 150px;
   mix-blend-mode: soft-light;
-  opacity: 0.4;
+  opacity: 0.22;
 }
 
 /* ── Visibility helpers ──────────────────────────────────────────────── */
@@ -521,7 +521,7 @@ button {
   align-items: flex-start;
   height: 130px;
   width: max-content;
-  animation: bookslide 22s linear infinite;
+  animation: bookslide 30s linear infinite;
 }
 .books-track img {
   height: 130px;
@@ -530,6 +530,9 @@ button {
   aspect-ratio: 6755 / 203;
   display: block;
   flex: 0 0 auto;
+  /* Matches the in-strip inter-book gap (42px native ≈ 27px @130h) so the loop
+     seam between the last and first book is evenly spaced. */
+  margin-right: 27px;
 }
 @keyframes bookslide {
   from {
