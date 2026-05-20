@@ -27,7 +27,15 @@ const amiri = Amiri({
   display: "swap",
 });
 
+/* Used to make OG/social image URLs absolute (required by WhatsApp & other crawlers). */
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "True ILM · Send the gift of Eid",
   description:
     "Send an Eid gift card to a friend or family member. One month of Islamic audiobooks and eBooks, on us.",
