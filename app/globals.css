@@ -419,13 +419,16 @@ button {
 }
 .books-track {
   display: flex;
+  align-items: flex-start;
   height: 260px;
   width: max-content;
   animation: bookslide 22s linear infinite;
 }
 .books-track img {
-  height: 100%;
+  height: 260px;
   width: auto;
+  /* Pin the strip's true ratio (3840x854) so it can never stretch/warp. */
+  aspect-ratio: 3840 / 854;
   display: block;
   flex: 0 0 auto;
 }
