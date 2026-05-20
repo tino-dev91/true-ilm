@@ -6,8 +6,8 @@ export function BooksMarquee({ label }: { label: string }) {
       <div className="label">{label}</div>
       <div className="books-marquee">
         <div className="books-track">
-          <Image src="/books-strip.png" alt="True ILM library" width={3840} height={854} priority />
-          <Image src="/books-strip.png" alt="" aria-hidden width={3840} height={854} />
+          <Image src="/books-strip.png" alt="True ILM library" width={6755} height={203} priority />
+          <Image src="/books-strip.png" alt="" aria-hidden width={6755} height={203} />
         </div>
       </div>
       <div className="books-stats">
