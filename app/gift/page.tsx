@@ -101,6 +101,9 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
                 Claim your free month
                 <ArrowIcon stroke="#EAC060" />
               </a>
+              <Link className="recv-cta-btn outline" href="/">
+                Send your own Eid gift
+              </Link>
               <p className="recv-cta-sub">Opens the True ILM app on iOS &amp; Android.</p>
             </div>
 
@@ -121,11 +124,6 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
         </div>
 
         <BooksMarquee label="Your library awaits" />
-        <div className="recv-trust" style={{ paddingBottom: 24 }}>
-          <Link className="text-link" href="/">
-            Send your own Eid gift →
-          </Link>
-        </div>
       </div>
 
       {/* ── MOBILE: phone ─────────────────────────────────────────── */}
@@ -168,6 +166,9 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
               Claim your free month
               <ArrowIcon stroke="#EAC060" />
             </a>
+            <Link className="recv-cta-btn outline" href="/">
+              Send your own Eid gift
+            </Link>
             <p className="recv-cta-sub">Opens the True ILM app on iOS &amp; Android.</p>
           </div>
 
@@ -176,12 +177,6 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
           <div className="trust">
             <span className="stars">★★★★★</span>
             <span>160,000+ Muslims · 185 countries</span>
-          </div>
-
-          <div style={{ textAlign: "center", paddingBottom: 8 }}>
-            <Link className="text-link" href="/">
-              Send your own Eid gift →
-            </Link>
           </div>
         </div>
       </div>

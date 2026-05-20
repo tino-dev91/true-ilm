@@ -130,12 +130,13 @@ button {
   border-radius: 4.96cqi;
   pointer-events: none;
   z-index: 3;
+  /* Slim diagonal sheen only — keeps the card's true colour vivid. */
   background: linear-gradient(
-    133deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.04) 32%,
-    rgba(255, 255, 255, 0.13) 45%,
-    rgba(255, 255, 255, 0) 56%
+    127deg,
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0) 17%,
+    rgba(255, 255, 255, 0.09) 38%,
+    rgba(255, 255, 255, 0) 48%
   );
 }
 .card-finish::after {
@@ -145,8 +146,8 @@ button {
   border-radius: inherit;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 150px 150px;
-  mix-blend-mode: overlay;
-  opacity: 0.38;
+  mix-blend-mode: soft-light;
+  opacity: 0.4;
 }
 
 /* ── Visibility helpers ──────────────────────────────────────────────── */
@@ -482,17 +483,17 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 18px 8px;
-  color: var(--text-lt);
-  font-size: 11px;
+  gap: 10px;
+  padding: 18px 18px 10px;
+  color: var(--text-mid);
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
 }
 .phone .trust .stars {
   color: var(--gold);
-  letter-spacing: 1px;
-  font-size: 12px;
+  letter-spacing: 1.5px;
+  font-size: 17px;
 }
 
 /* Books marquee */
@@ -699,9 +700,22 @@ button {
   gap: 10px;
   box-shadow: 0 8px 20px rgba(25, 35, 81, 0.25);
   transition: transform 0.12s;
+  text-decoration: none;
 }
 .recv-cta-btn:hover {
   transform: translateY(-1px);
+}
+/* Outlined "send your own gift" — same size, stroke not fill. */
+.recv-cta-btn.outline {
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--navy);
+  padding: 14px;
+  box-shadow: none;
+  margin-top: 12px;
+}
+.recv-cta-btn.outline:hover {
+  background: rgba(25, 35, 81, 0.04);
 }
 .recv-cta-sub {
   text-align: center;
@@ -1155,10 +1169,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   padding: 18px;
-  color: var(--text-lt);
-  font-size: 12px;
+  color: var(--text-mid);
+  font-size: 14px;
   font-weight: 700;
 }
 .recv-page-d .recv-trust {
@@ -1167,6 +1181,6 @@ button {
 }
 .recv-trust .stars {
   color: var(--gold);
-  letter-spacing: 1px;
-  font-size: 13px;
+  letter-spacing: 1.5px;
+  font-size: 17px;
 }
