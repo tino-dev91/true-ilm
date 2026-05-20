@@ -122,6 +122,33 @@ button {
   text-transform: uppercase;
 }
 
+/* Laminate finish layered over the whole card (art + text) so everything reads
+   as one printed, glossy surface. */
+.card-finish {
+  position: absolute;
+  inset: 0;
+  border-radius: 4.96cqi;
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(
+    133deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 32%,
+    rgba(255, 255, 255, 0.13) 45%,
+    rgba(255, 255, 255, 0) 56%
+  );
+}
+.card-finish::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+  mix-blend-mode: overlay;
+  opacity: 0.38;
+}
+
 /* ── Visibility helpers ──────────────────────────────────────────────── */
 /* Visibility utilities — !important so they always win over component
    display rules (e.g. .recv-page / .ds set their own display). */
