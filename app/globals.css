@@ -1034,18 +1034,22 @@ button {
   filter: drop-shadow(0 26px 56px rgba(10, 17, 41, 0.28));
 }
 .ds-card-caption {
-  margin-top: 28px;
+  width: fit-content;
+  margin: 24px auto 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: var(--cream);
   text-align: center;
   font-size: 12.5px;
-  color: var(--gold-dp);
-  opacity: 0.85;
-  letter-spacing: 2.5px;
-  font-weight: 700;
+  letter-spacing: 1.4px;
+  font-weight: 800;
   text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(25, 35, 81, 0.18);
 }
 .ds-card-caption b {
-  color: var(--navy);
-  opacity: 1;
+  color: var(--gold);
+  font-weight: 800;
 }
 
 /* Desktop sent confirmation */

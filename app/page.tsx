@@ -207,7 +207,7 @@ export default function Home() {
           <div className="ds-card-stage">
             <CardFrame id={pick} recipient={previewName} sender={previewSender} showOverlay />
             <div className="ds-card-caption">
-              1 month of <b>True ILM</b> · on us
+              1 month of <b>True ILM Pro</b> · on us
             </div>
           </div>
         </div>

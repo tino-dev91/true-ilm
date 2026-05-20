@@ -11,12 +11,25 @@ import { CARD_IDS, CARD_TITLES, type CardId } from "./card-data";
 
 export type { CardId } from "./card-data";
 
-/* Per-card: background + grain tint (rgb 0..1) for the subtle texture. */
-const CARD_CFG: Record<CardId, { bg: string; grain: [number, number, number] }> = {
-  lantern: { bg: "#192351", grain: [1, 1, 1] },
-  skyline: { bg: "#FFE8B3", grain: [0.5, 0.36, 0.08] },
-  ornament: { bg: "#FBB1B8", grain: [0.5, 0.18, 0.24] },
+/* Per-card: background + tone-on-tone pattern colour/opacity for the subtle
+   complementary texture (8-point star lattice). */
+const CARD_CFG: Record<CardId, { bg: string; pat: string; patOp: number }> = {
+  lantern: { bg: "#192351", pat: "#FEF7E6", patOp: 0.08 },
+  skyline: { bg: "#FFE8B3", pat: "#B5811F", patOp: 0.13 },
+  ornament: { bg: "#FBB1B8", pat: "#9C414A", patOp: 0.12 },
 };
+
+/* 8-point Islamic star polygon points, centred at (cx, cy). */
+function starPoints(cx: number, cy: number, r: number) {
+  const inner = r * 0.42;
+  const pts: string[] = [];
+  for (let i = 0; i < 16; i++) {
+    const a = (i * Math.PI) / 8 - Math.PI / 2;
+    const rad = i % 2 === 0 ? r : inner;
+    pts.push(`${(cx + Math.cos(a) * rad).toFixed(2)},${(cy + Math.sin(a) * rad).toFixed(2)}`);
+  }
+  return pts.join(" ");
+}
 
 /* Name colours + greeting (calligraphy) colour, chosen for contrast. */
 const OVERLAY_COLORS: Record<CardId, { color: string; accent: string; shadow: boolean; greet: string }> = {
@@ -55,23 +68,28 @@ function GiftBox() {
 function GiftCard({ id }: { id: CardId }) {
   const raw = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const clipId = "cc-" + raw;
-  const grainId = "cg-" + raw;
-  const { bg, grain } = CARD_CFG[id];
-  const [gr, gg, gb] = grain;
+  const patId = "cp-" + raw;
+  const { bg, pat, patOp } = CARD_CFG[id];
   return (
     <svg className="cardImg" viewBox="0 0 1008 704" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <clipPath id={clipId}>
           <rect width="1007.88" height="703.44" rx="50" fill="white" />
         </clipPath>
-        <filter id={grainId} x="0" y="0" width="100%" height="100%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch" />
-          <feColorMatrix values={`0 0 0 0 ${gr}  0 0 0 0 ${gg}  0 0 0 0 ${gb}  0 0 0 0.55 0`} />
-        </filter>
+        {/* tone-on-tone 8-point star lattice */}
+        <pattern id={patId} width="86" height="86" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+          <g fill={pat}>
+            <polygon points={starPoints(43, 43, 11)} />
+            <circle cx="0" cy="0" r="2.4" />
+            <circle cx="86" cy="0" r="2.4" />
+            <circle cx="0" cy="86" r="2.4" />
+            <circle cx="86" cy="86" r="2.4" />
+          </g>
+        </pattern>
       </defs>
       <g clipPath={`url(#${clipId})`}>
         <rect width="1007.88" height="703.44" rx="50" fill={bg} />
-        <rect width="1007.88" height="703.44" filter={`url(#${grainId})`} opacity="0.06" />
+        <rect width="1007.88" height="703.44" fill={`url(#${patId})`} opacity={patOp} />
         <GiftBox />
       </g>
     </svg>
