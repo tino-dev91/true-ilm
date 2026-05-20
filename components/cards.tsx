@@ -69,6 +69,7 @@ function GiftCard({ id }: { id: CardId }) {
   const raw = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const clipId = "cc-" + raw;
   const patId = "cp-" + raw;
+  const borderId = "cb-" + raw;
   const { bg, pat, patOp } = CARD_CFG[id];
   return (
     <svg className="cardImg" viewBox="0 0 1008 704" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,11 +87,18 @@ function GiftCard({ id }: { id: CardId }) {
             <circle cx="86" cy="86" r="2.4" />
           </g>
         </pattern>
+        {/* beveled rim: light top edge → soft dark bottom for a raised, real-card look */}
+        <linearGradient id={borderId} x1="0" y1="0" x2="0" y2="704" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.4" />
+          <stop offset="0.45" stopColor="#FFFFFF" stopOpacity="0.06" />
+          <stop offset="1" stopColor="#000000" stopOpacity="0.22" />
+        </linearGradient>
       </defs>
       <g clipPath={`url(#${clipId})`}>
         <rect width="1007.88" height="703.44" rx="50" fill={bg} />
         <rect width="1007.88" height="703.44" fill={`url(#${patId})`} opacity={patOp} />
         <GiftBox />
+        <rect x="1.5" y="1.5" width="1004.88" height="700.44" rx="48.5" fill="none" stroke={`url(#${borderId})`} strokeWidth="3" />
       </g>
     </svg>
   );
