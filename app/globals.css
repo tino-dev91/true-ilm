@@ -964,7 +964,7 @@ button {
   max-width: 480px;
 }
 
-/* ── Recipient page shell ────────────────────────────────────────────── */
+/* ── Recipient page shell (mobile) ───────────────────────────────────── */
 .recv-page {
   min-height: 100vh;
   display: flex;
@@ -973,4 +973,77 @@ button {
 }
 .recv-page .phone {
   box-shadow: 0 30px 60px rgba(10, 17, 41, 0.08);
+}
+
+/* ── Recipient page (desktop split-screen) ───────────────────────────── */
+.recv-page-d {
+  flex-direction: column;
+}
+.recv-page-d .ds {
+  min-height: 88vh;
+}
+/* top-align so taller recipient content never clips */
+.recv-page-d .ds-left {
+  justify-content: flex-start;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+.recv-from {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: var(--cream-soft);
+  border: 1px solid var(--gold);
+  color: var(--navy);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 28px;
+}
+.recv-from .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.recv-page-d .ds-h1 {
+  margin-bottom: 20px;
+}
+.recv-page-d .note-card {
+  margin: 0 0 28px;
+  max-width: 520px;
+}
+.recv-page-d .ds-label {
+  margin-bottom: 12px;
+}
+.recv-page-d .recv-stats {
+  padding: 0;
+  max-width: 520px;
+  margin: 0 0 28px;
+}
+.recv-claim {
+  max-width: 520px;
+}
+.recv-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px;
+  color: var(--text-lt);
+  font-size: 12px;
+  font-weight: 700;
+}
+.recv-page-d .recv-trust {
+  justify-content: flex-start;
+  padding: 22px 0 0;
+}
+.recv-trust .stars {
+  color: var(--gold);
+  letter-spacing: 1px;
+  font-size: 13px;
 }
