@@ -130,7 +130,7 @@ button {
 }
 
 .phone .preview {
-  padding: 18px 22px 6px;
+  padding: 16px 14px 8px;
 }
 .phone .frameWrap {
   border-radius: 14px;
@@ -509,7 +509,7 @@ button {
 
 .phone .recv-preview-wrap {
   position: relative;
-  padding: 18px 22px 6px;
+  padding: 16px 14px 6px;
 }
 
 .note-card {
