@@ -130,7 +130,7 @@ export default function Home() {
           <h1 className="ds-h1">
             Send the gift of <em>Eid</em>.
           </h1>
-          <p className="ds-sub">One month of audiobooks and eBooks, on us.</p>
+          <p className="ds-sub">One month of unlimited audiobooks and eBooks, on us.</p>
 
           {step === 1 && (
             <>
@@ -226,7 +226,7 @@ export default function Home() {
           <h1>
             Send the gift of <em>Eid</em>.
           </h1>
-          <p>One month of audiobooks and eBooks, on us.</p>
+          <p>One month of unlimited audiobooks and eBooks, on us.</p>
         </div>
 
         <div className="stepbar">
