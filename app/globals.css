@@ -42,22 +42,18 @@ button {
   position: relative;
   container-type: inline-size;
   width: 100%;
-  /* No aspect-ratio: the inline SVG's own 2:1 viewBox drives the height.
-     (aspect-ratio + container-type could distort the SVG on some browsers.) */
-  border-radius: 14px;
-  overflow: hidden;
+  /* No clip/border-radius: the SVG artwork has its own rounded corners with a
+     transparent background, so the page shows through cleanly. */
   line-height: 0;
-}
-.cardFrame.sm {
-  border-radius: 6px;
 }
 .cardImg {
   display: block;
   width: 100%;
   height: auto;
-  /* Hard-lock the artwork to its true 2:1 ratio so nothing can squeeze it. */
-  aspect-ratio: 2 / 1;
-  object-fit: cover;
+  /* Hard-lock the artwork to its true ratio (1008x704) so nothing can squeeze it. */
+  aspect-ratio: 1008 / 704;
+  /* Shadow follows the SVG's rounded alpha (not a rectangle). */
+  filter: drop-shadow(0 18px 34px rgba(10, 17, 41, 0.18));
 }
 
 /* ── Visibility helpers ──────────────────────────────────────────────── */
@@ -141,9 +137,8 @@ button {
   padding: 16px 14px 8px;
 }
 .phone .frameWrap {
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 16px 32px rgba(10, 17, 41, 0.18), 0 2px 6px rgba(10, 17, 41, 0.08);
+  /* shadow + rounded corners come from the SVG artwork itself (.cardImg) */
+  line-height: 0;
 }
 
 .phone .secLabel {
@@ -969,8 +964,8 @@ button {
   width: min(560px, 100%);
   position: relative;
 }
-.ds-card-stage .cardFrame {
-  box-shadow: 0 24px 60px rgba(25, 35, 81, 0.18), 0 4px 14px rgba(25, 35, 81, 0.1);
+.ds-card-stage .cardImg {
+  filter: drop-shadow(0 26px 56px rgba(10, 17, 41, 0.28));
 }
 .ds-card-caption {
   margin-top: 28px;

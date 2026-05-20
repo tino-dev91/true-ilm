@@ -11,9 +11,9 @@ export type { CardId } from "./card-data";
 
 /* Per-card overlay colours (text + "a gift from" accent). */
 const OVERLAY_COLORS: Record<CardId, { color: string; accent: string; shadow: boolean }> = {
-  lantern: { color: "#FEF7E6", accent: "#EAC060", shadow: true },
-  skyline: { color: "#192351", accent: "#192351", shadow: false },
-  ornament: { color: "#192351", accent: "#B07069", shadow: false },
+  lantern: { color: "#FEF7E6", accent: "#F5D27A", shadow: true },
+  skyline: { color: "#192351", accent: "#B5742A", shadow: false },
+  ornament: { color: "#192351", accent: "#B5495A", shadow: false },
 };
 
 /* Card list for the colour picker (id + title). */
@@ -22,7 +22,8 @@ export const CARDS: { id: CardId; title: string }[] = CARD_IDS.map((id) => ({
   title: CARD_TITLES[id],
 }));
 
-/* ── Name overlay drawn on top of the card ────────────────────────────── */
+/* Name overlay drawn on top of the card. The new artwork has the gift box at
+   the bottom, so the name sits in the open upper band. */
 function NameOverlay({
   recipient,
   sender,
@@ -47,83 +48,31 @@ function NameOverlay({
         justifyContent: "center",
         pointerEvents: "none",
         padding: "0 8%",
-        paddingTop: "4%",
       }}
     >
       <div
         style={{
           fontFamily: "var(--font-body)",
           fontWeight: 900,
-          fontSize: "min(8cqi, 72px)",
+          fontSize: "min(8.5cqi, 76px)",
           color,
-          lineHeight: 1.05,
+          lineHeight: 1.04,
           letterSpacing: "-0.5px",
           textAlign: "center",
-          textShadow: shadow ? "0 4px 16px rgba(0,0,0,0.25)" : "none",
+          textShadow: shadow ? "0 4px 16px rgba(0,0,0,0.3)" : "none",
         }}
       >
         {recipient}
       </div>
       <div
         style={{
-          marginTop: "1.4%",
-          fontFamily: "var(--font-body)",
-          fontWeight: 600,
-          fontSize: "min(2.6cqi, 24px)",
-          color: accent,
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-          opacity: 0.9,
-        }}
-      >
-        A gift from {sender}
-      </div>
-    </div>
-  );
-}
-
-/* The Heritage Skyline artwork is biased low (mosque silhouette), so its name
-   overlay sits higher in the cream sky band. */
-function SkylineOverlay({ recipient, sender, accent }: { recipient: string; sender: string; accent: string }) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: 0,
-        right: 0,
-        top: "38%",
-        transform: "translateY(-50%)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        pointerEvents: "none",
-      }}
-    >
-      <div
-        style={{
-          fontFamily: "var(--font-body)",
-          fontWeight: 900,
-          fontSize: "min(8cqi, 72px)",
-          color: "#192351",
-          lineHeight: 1.05,
-          letterSpacing: "-.5px",
-          textAlign: "center",
-          textShadow: "0 2px 12px rgba(254,247,230,.6)",
-        }}
-      >
-        {recipient}
-      </div>
-      <div
-        style={{
-          marginTop: "1%",
+          marginTop: "1.6%",
           fontFamily: "var(--font-body)",
           fontWeight: 700,
-          fontSize: "min(2.6cqi, 24px)",
+          fontSize: "min(2.8cqi, 26px)",
           color: accent,
           letterSpacing: "2px",
           textTransform: "uppercase",
-          opacity: 0.7,
         }}
       >
         A gift from {sender}
@@ -154,17 +103,14 @@ export function CardFrame({
         className="cardImg"
         src={CARD_IMAGES[id]}
         alt="Eid gift card"
-        width={2160}
-        height={1080}
+        width={1008}
+        height={704}
         sizes="(max-width: 980px) 100vw, 560px"
+        unoptimized
         priority
       />
       {showOverlay && recipient ? (
-        id === "skyline" ? (
-          <SkylineOverlay recipient={recipient} sender={sender ?? ""} accent={ov.accent} />
-        ) : (
-          <NameOverlay recipient={recipient} sender={sender ?? ""} color={ov.color} accent={ov.accent} shadow={ov.shadow} />
-        )
+        <NameOverlay recipient={recipient} sender={sender ?? ""} color={ov.color} accent={ov.accent} shadow={ov.shadow} />
       ) : null}
     </div>
   );
