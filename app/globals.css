@@ -42,9 +42,11 @@ button {
   position: relative;
   container-type: inline-size;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  /* No aspect-ratio: the inline SVG's own 2:1 viewBox drives the height.
+     (aspect-ratio + container-type could distort the SVG on some browsers.) */
   border-radius: 14px;
   overflow: hidden;
+  line-height: 0;
 }
 .cardFrame.sm {
   border-radius: 6px;
@@ -86,7 +88,7 @@ button {
 }
 .phone .appbar .brand img {
   display: block;
-  height: 22px;
+  height: 28px;
   width: auto;
 }
 
@@ -96,7 +98,7 @@ button {
 }
 .phone .hero .ar {
   font-family: var(--font-arabic);
-  font-size: 18px;
+  font-size: 22px;
   color: var(--gold-dp);
   letter-spacing: 4px;
   margin: 4px 0 10px;
@@ -104,12 +106,12 @@ button {
 }
 .phone .hero h1 {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.4px;
   color: var(--navy);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   text-wrap: balance;
 }
 .phone .hero h1 em {
@@ -119,12 +121,12 @@ button {
   padding: 0 2px;
 }
 .phone .hero p {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--text-mid);
   font-weight: 600;
   line-height: 1.5;
   margin: 0;
-  max-width: 280px;
+  max-width: 320px;
 }
 
 .phone .preview {
@@ -137,10 +139,10 @@ button {
 }
 
 .phone .secLabel {
-  margin: 22px 22px 10px;
-  font-size: 10px;
+  margin: 24px 22px 12px;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 1.6px;
+  letter-spacing: 1.4px;
   color: var(--navy);
   text-transform: uppercase;
 }
