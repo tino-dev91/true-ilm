@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CardFrame } from "@/components/cards";
 import { resolveCardId } from "@/components/card-data";
 import { BooksMarquee } from "@/components/BooksMarquee";
-import { ArrowIcon } from "@/components/icons";
+import { ClaimButton } from "@/components/ClaimButton";
 import { DEFAULT_NOTE } from "@/lib/gift";
 
 type SearchParams = Promise<{ c?: string; to?: string; from?: string; note?: string }>;
@@ -97,10 +97,7 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
             <div className="recv-stats">{stats}</div>
 
             <div className="recv-claim">
-              <a className="recv-cta-btn" href="https://redirect.appmetrica.yandex.com/serve/821977019486082306" target="_blank" rel="noopener noreferrer">
-                Claim your free month
-                <ArrowIcon stroke="#EAC060" />
-              </a>
+              <ClaimButton card={card} />
               <Link className="recv-cta-btn outline" href="/">
                 Send your own Eid gift
               </Link>
@@ -162,10 +159,7 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
           <div className="recv-stats">{stats}</div>
 
           <div className="recv-cta">
-            <a className="recv-cta-btn" href="https://redirect.appmetrica.yandex.com/serve/821977019486082306" target="_blank" rel="noopener noreferrer">
-              Claim your free month
-              <ArrowIcon stroke="#EAC060" />
-            </a>
+            <ClaimButton card={card} />
             <Link className="recv-cta-btn outline" href="/">
               Send your own Eid gift
             </Link>

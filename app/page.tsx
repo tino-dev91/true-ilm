@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { CARDS, CardFrame, type CardId } from "@/components/cards";
 import { BooksMarquee } from "@/components/BooksMarquee";
 import { WhatsAppIcon, ArrowIcon } from "@/components/icons";
@@ -53,6 +54,7 @@ export default function Home() {
       return;
     }
     if (!namesFilled) return;
+    track("gift_share", { method: gift.method, card: gift.card });
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = buildGiftUrl(gift, origin);
     setGiftUrl(url);
