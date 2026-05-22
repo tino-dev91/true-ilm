@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Nunito_Sans, Familjen_Grotesk, Amiri } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /* Body — brand font */
@@ -50,7 +52,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${nunito.variable} ${familjen.variable} ${amiri.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
