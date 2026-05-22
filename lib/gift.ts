@@ -29,7 +29,7 @@ export function buildShareAction(
   gift: Gift,
   giftUrl: string,
 ): { kind: "href"; href: string } | { kind: "copy"; text: string } {
-  const greeting = `Eid Mubarak${gift.to ? `, ${gift.to}` : ""}! I've sent you a gift from True ILM — one month of Islamic audiobooks and eBooks, on me. Claim it here:`;
+  const greeting = `Eid Mubarak${gift.to ? `, ${gift.to}` : ""}! I've sent you a gift, from me to you — 1 month of True ILM Pro, free. Claim it here:`;
   const message = `${greeting} ${giftUrl}`;
 
   switch (gift.method) {
