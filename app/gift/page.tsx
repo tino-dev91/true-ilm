@@ -14,10 +14,10 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
   const to = (sp.to ?? "").trim();
   const from = (sp.from ?? "").trim();
 
-  const title = to ? `${to}, you've got an Eid gift` : "You've got an Eid gift";
+  const title = to ? `${to}, you have an Eid gift. Open up!` : "You have an Eid gift. Open up!";
   const description = from
-    ? `${from} sent you a True ILM gift — 1 month of Islamic audiobooks & eBooks, on them.`
-    : "A True ILM gift — 1 month of Islamic audiobooks & eBooks, on us.";
+    ? `${from} sent you a gift — 1 month of True ILM Pro, free. Open to claim it.`
+    : "1 month of True ILM Pro, free — open to claim your Eid gift.";
 
   /* OG image + canonical link carry the same gift params so the preview is personalised. */
   const q = new URLSearchParams({ c: card });

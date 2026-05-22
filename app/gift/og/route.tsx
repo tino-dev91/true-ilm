@@ -39,6 +39,7 @@ export async function GET(req: Request) {
   const id = searchParams.get("c") || "lantern";
   const theme = THEMES[id] ?? THEMES.lantern;
   const isDark = id === "lantern";
+  const to = (searchParams.get("to") || "").trim();
 
   const poppins = await fetch(new URL("./Poppins-Bold.ttf", import.meta.url)).then((r) => r.arrayBuffer());
 
@@ -92,9 +93,17 @@ export async function GET(req: Request) {
           EID MUBARAK
         </div>
 
-        {/* headline */}
-        <div style={{ display: "flex", flexDirection: "column", maxWidth: 760 }}>
-          <div style={{ fontSize: 96, color: theme.text, lineHeight: 1.0, letterSpacing: -2 }}>Open Eid Gift</div>
+        {/* headline — personalised */}
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 720 }}>
+          {to ? (
+            <div style={{ fontSize: 90, color: theme.text, lineHeight: 1.02, letterSpacing: -2 }}>{`${to},`}</div>
+          ) : null}
+          <div style={{ fontSize: 52, color: theme.text, lineHeight: 1.1, letterSpacing: -1, marginTop: to ? 6 : 0 }}>
+            you have an Eid gift.
+          </div>
+          <div style={{ fontSize: 52, color: theme.accent, lineHeight: 1.1, letterSpacing: -1, marginTop: 2 }}>
+            Open up!
+          </div>
         </div>
 
         {/* footer */}
