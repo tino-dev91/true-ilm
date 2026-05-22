@@ -29,12 +29,15 @@ const amiri = Amiri({
   display: "swap",
 });
 
-/* Used to make OG/social image URLs absolute (required by WhatsApp & other crawlers). */
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
+/* Canonical domain — used to make OG/social image URLs absolute (required by
+   WhatsApp & other crawlers). Production uses the custom domain; previews use
+   their own URL; local dev uses localhost. */
+const siteUrl =
+  process.env.VERCEL_ENV === "production"
+    ? "https://gift.trueilm.com"
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
