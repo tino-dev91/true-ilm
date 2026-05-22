@@ -40,6 +40,7 @@ export async function GET(req: Request) {
   const theme = THEMES[id] ?? THEMES.lantern;
   const isDark = id === "lantern";
   const to = (searchParams.get("to") || "").trim();
+  const from = (searchParams.get("from") || "").trim();
 
   const poppins = await fetch(new URL("./Poppins-Bold.ttf", import.meta.url)).then((r) => r.arrayBuffer());
 
@@ -106,20 +107,19 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        {/* footer */}
+        {/* footer — personal, unbranded */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             borderTop: `1px solid ${isDark ? "rgba(245,210,122,0.35)" : "rgba(25,35,81,0.2)"}`,
             paddingTop: 24,
+            fontSize: 28,
+            letterSpacing: 1,
+            color: theme.accent,
           }}
         >
-          <div style={{ fontSize: 34, letterSpacing: 2, color: theme.text }}>TRUE ILM</div>
-          <div style={{ fontSize: 22, color: theme.accent, letterSpacing: 1 }}>
-            1 month of True ILM Pro for free
-          </div>
+          {from ? `From ${from}` : "Eid Mubarak"}
         </div>
       </div>
     ),

@@ -16,8 +16,8 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
 
   const title = to ? `${to}, you have an Eid gift. Open up!` : "You have an Eid gift. Open up!";
   const description = from
-    ? `${from} sent you a gift — 1 month of True ILM Pro, free. Open to claim it.`
-    : "1 month of True ILM Pro, free — open to claim your Eid gift.";
+    ? `${from} sent you a little Eid gift. Open it up to see what's inside.`
+    : "A little Eid gift, just for you. Open it up to see what's inside.";
 
   /* OG image + canonical link carry the same gift params so the preview is personalised. */
   const q = new URLSearchParams({ c: card });
