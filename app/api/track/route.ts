@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const redis = getRedis();
   if (!redis) return Response.json({ ok: false, reason: "not-configured" });
 
-  let body: { event?: string; method?: string; card?: string };
+  let body: { event?: string; method?: string; card?: string; key?: string };
   try {
     body = await req.json();
   } catch {
@@ -17,6 +17,22 @@ export async function POST(req: Request) {
   }
 
   const card = CARD_KEYS.includes(body.card as never) ? body.card : null;
+
+  // Secret-gated reset (e.g. before launch): { event:"__reset__", key:STATS_KEY }
+  if (body.event === "__reset__") {
+    if (!process.env.STATS_KEY || body.key !== process.env.STATS_KEY) {
+      return Response.json({ ok: false }, { status: 403 });
+    }
+    const keys = [
+      "gift_share:total",
+      ...SHARE_METHODS.map((m) => `gift_share:method:${m}`),
+      ...CARD_KEYS.map((c) => `gift_share:card:${c}`),
+      "claim_free_month:total",
+      ...CARD_KEYS.map((c) => `claim_free_month:card:${c}`),
+    ];
+    await redis.del(...keys);
+    return Response.json({ ok: true, reset: true });
+  }
 
   if (body.event === "gift_share") {
     const method = SHARE_METHODS.includes(body.method as never) ? body.method : null;
