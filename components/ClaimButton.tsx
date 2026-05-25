@@ -4,7 +4,7 @@ import { track } from "@vercel/analytics";
 import { logEvent } from "@/lib/track";
 import { ArrowIcon } from "./icons";
 
-const CLAIM_URL = "https://redirect.appmetrica.yandex.com/serve/821977019486082306";
+const CLAIM_URL = "https://4711657.redirect.appmetrica.yandex.com/paywall/eid_30_days?appmetrica_tracking_id=1038659881009228825&referrer=reattribution%3D1";
 
 /* "Claim your free month" — fires a custom analytics event on click, then opens
    the app deep link. */
