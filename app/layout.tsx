@@ -44,6 +44,23 @@ export const metadata: Metadata = {
   title: "True ILM · Send the gift of Eid",
   description:
     "Send an Eid gift card to a friend or family member. One month of Islamic audiobooks and eBooks, on us.",
+  /* Default share thumbnail (bare gift.trueilm.com link) — shows the gift card
+     preview. The /gift page overrides this with a personalised version. */
+  openGraph: {
+    title: "Send the gift of Eid",
+    description:
+      "Send an Eid gift card to a friend or family member. One month of Islamic audiobooks and eBooks, on us.",
+    type: "website",
+    url: "/",
+    images: [{ url: "/gift/og?c=lantern", width: 1200, height: 630, alt: "An Eid gift card from True ILM" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Send the gift of Eid",
+    description:
+      "Send an Eid gift card to a friend or family member. One month of Islamic audiobooks and eBooks, on us.",
+    images: ["/gift/og?c=lantern"],
+  },
 };
 
 export const viewport: Viewport = {
