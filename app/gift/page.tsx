@@ -98,7 +98,7 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
 
             <div className="recv-claim">
               <ClaimButton card={card} />
-              <Link className="recv-cta-btn outline" href="/">
+              <Link className="recv-cta-btn outline" href="/?ref=g">
                 Send your own Eid gift
               </Link>
               <p className="recv-cta-sub">Opens the True ILM app on iOS &amp; Android.</p>
@@ -160,7 +160,7 @@ export default async function GiftPage({ searchParams }: { searchParams: SearchP
 
           <div className="recv-cta">
             <ClaimButton card={card} />
-            <Link className="recv-cta-btn outline" href="/">
+            <Link className="recv-cta-btn outline" href="/?ref=g">
               Send your own Eid gift
             </Link>
             <p className="recv-cta-sub">Opens the True ILM app on iOS &amp; Android.</p>

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getRedis, SHARE_METHODS, CARD_KEYS } from "@/lib/redis";
+import { getRedis, SHARE_METHODS, CARD_KEYS, SHARE_SOURCES } from "@/lib/redis";
 
 export const dynamic = "force-dynamic";
 export const metadata = { robots: { index: false, follow: false } };
@@ -27,6 +27,7 @@ export default async function StatsPage({ searchParams }: { searchParams: Search
     "gift_share:total",
     ...SHARE_METHODS.map((m) => `gift_share:method:${m}`),
     ...CARD_KEYS.map((c) => `gift_share:card:${c}`),
+    ...SHARE_SOURCES.map((s) => `gift_share:source:${s}`),
     "claim_free_month:total",
     ...CARD_KEYS.map((c) => `claim_free_month:card:${c}`),
   ];
@@ -37,6 +38,17 @@ export default async function StatsPage({ searchParams }: { searchParams: Search
   const shareTotal = m["gift_share:total"];
   const claimTotal = m["claim_free_month:total"];
   const rate = shareTotal ? ((claimTotal / shareTotal) * 100).toFixed(1) + "%" : "—";
+
+  /* Source counters started ticking when referral tracking shipped, so they
+     sum to less than gift_share:total when older shares exist. Use the sum as
+     the denominator for share-of-tracked so % is honest. */
+  const sourceTracked = SHARE_SOURCES.reduce((sum, s) => sum + m[`gift_share:source:${s}`], 0);
+  const sourcePct = (v: number) => (sourceTracked ? ((v / sourceTracked) * 100).toFixed(1) + "%" : "—");
+  const SOURCE_LABELS: Record<(typeof SHARE_SOURCES)[number], string> = {
+    direct: "Direct (no referral)",
+    ref: "Referred (visited a gift)",
+    ref_claim: "Referred + claimed",
+  };
 
   const cell: React.CSSProperties = { padding: "10px 14px", borderBottom: "1px solid #eee" };
   const num: React.CSSProperties = { ...cell, textAlign: "right", fontVariantNumeric: "tabular-nums", fontWeight: 700 };
@@ -61,6 +73,32 @@ export default async function StatsPage({ searchParams }: { searchParams: Search
               <td style={num}>{m[`gift_share:method:${mtd}`]}</td>
             </tr>
           ))}
+        </tbody>
+      </table>
+
+      <h2 style={{ fontSize: 16 }}>Shares by source</h2>
+      <p style={{ color: "#888", fontSize: 12, marginTop: -4 }}>
+        Tracked: {sourceTracked} of {shareTotal} shares (referral tracking added later — earlier shares have no source).
+      </p>
+      <table style={{ borderCollapse: "collapse", width: "100%", marginBottom: 28 }}>
+        <thead>
+          <tr>
+            <td style={{ ...cell, fontWeight: 700 }}>Source</td>
+            <td style={{ ...num, color: "#666" }}>Shares</td>
+            <td style={{ ...num, color: "#666" }}>% of tracked</td>
+          </tr>
+        </thead>
+        <tbody>
+          {SHARE_SOURCES.map((s) => {
+            const v = m[`gift_share:source:${s}`];
+            return (
+              <tr key={s}>
+                <td style={cell}>{SOURCE_LABELS[s]}</td>
+                <td style={num}>{v}</td>
+                <td style={num}>{sourcePct(v)}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 

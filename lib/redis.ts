@@ -12,3 +12,4 @@ export function getRedis(): Redis | null {
 
 export const SHARE_METHODS = ["whatsapp", "email", "link"] as const;
 export const CARD_KEYS = ["lantern", "skyline", "ornament"] as const;
+export const SHARE_SOURCES = ["direct", "ref", "ref_claim"] as const;

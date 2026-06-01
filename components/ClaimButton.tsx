@@ -18,6 +18,11 @@ export function ClaimButton({ card }: { card: string }) {
       onClick={() => {
         track("claim_free_month", { card });
         logEvent("claim_free_month", { card });
+        try {
+          localStorage.setItem("tilm_claimed", "1");
+        } catch {
+          /* private mode / storage disabled — best-effort signal only */
+        }
       }}
     >
       Claim your free month

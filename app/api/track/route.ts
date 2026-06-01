@@ -1,4 +1,4 @@
-import { getRedis, SHARE_METHODS, CARD_KEYS } from "@/lib/redis";
+import { getRedis, SHARE_METHODS, CARD_KEYS, SHARE_SOURCES } from "@/lib/redis";
 
 export const runtime = "nodejs";
 
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const redis = getRedis();
   if (!redis) return Response.json({ ok: false, reason: "not-configured" });
 
-  let body: { event?: string; method?: string; card?: string; key?: string };
+  let body: { event?: string; method?: string; card?: string; source?: string; key?: string };
   try {
     body = await req.json();
   } catch {
@@ -27,6 +27,7 @@ export async function POST(req: Request) {
       "gift_share:total",
       ...SHARE_METHODS.map((m) => `gift_share:method:${m}`),
       ...CARD_KEYS.map((c) => `gift_share:card:${c}`),
+      ...SHARE_SOURCES.map((s) => `gift_share:source:${s}`),
       "claim_free_month:total",
       ...CARD_KEYS.map((c) => `claim_free_month:card:${c}`),
     ];
@@ -36,9 +37,11 @@ export async function POST(req: Request) {
 
   if (body.event === "gift_share") {
     const method = SHARE_METHODS.includes(body.method as never) ? body.method : null;
+    const source = SHARE_SOURCES.includes(body.source as never) ? body.source : null;
     await redis.incr("gift_share:total");
     if (method) await redis.incr(`gift_share:method:${method}`);
     if (card) await redis.incr(`gift_share:card:${card}`);
+    if (source) await redis.incr(`gift_share:source:${source}`);
   } else if (body.event === "claim_free_month") {
     await redis.incr("claim_free_month:total");
     if (card) await redis.incr(`claim_free_month:card:${card}`);

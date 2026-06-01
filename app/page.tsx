@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
@@ -39,6 +39,27 @@ export default function Home() {
   const [sent, setSent] = useState(false);
   const [giftUrl, setGiftUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [source, setSource] = useState<"direct" | "ref" | "ref_claim">("direct");
+
+  /* Resolve referral source once on mount and pin it for the session, so step
+     transitions or refreshes don't lose the signal. ?ref=g marks visitors who
+     came from someone else's gift page; tilm_claimed adds the claimed bit. */
+  useEffect(() => {
+    try {
+      const cached = sessionStorage.getItem("tilm_source");
+      if (cached === "direct" || cached === "ref" || cached === "ref_claim") {
+        setSource(cached);
+        return;
+      }
+      const isRef = new URLSearchParams(window.location.search).get("ref") === "g";
+      const claimed = localStorage.getItem("tilm_claimed") === "1";
+      const s: "direct" | "ref" | "ref_claim" = isRef ? (claimed ? "ref_claim" : "ref") : "direct";
+      sessionStorage.setItem("tilm_source", s);
+      setSource(s);
+    } catch {
+      /* storage unavailable — fall back to direct */
+    }
+  }, []);
 
   const gift: Gift = { card: pick, to, from, note, method };
 
@@ -55,8 +76,8 @@ export default function Home() {
       return;
     }
     if (!namesFilled) return;
-    track("gift_share", { method: gift.method, card: gift.card });
-    logEvent("gift_share", { method: gift.method, card: gift.card });
+    track("gift_share", { method: gift.method, card: gift.card, source });
+    logEvent("gift_share", { method: gift.method, card: gift.card, source });
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = buildGiftUrl(gift, origin);
     setGiftUrl(url);
