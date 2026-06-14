@@ -217,7 +217,7 @@ export default function NewYear() {
             <span className={"lbl " + (step === 2 ? "active" : "")}>Personalise</span>
           </div>
           <h1 className="ds-h1">
-            Send the gift of <em>knowledge</em> this New Year.
+            Send the gift of <em>knowledge</em> this Muharram.
           </h1>
           <p className="ds-sub">
             Gift someone the book <b>Muharram</b> and 30 days of True ILM Pro, completely free, and help them start
@@ -331,7 +331,7 @@ export default function NewYear() {
         <div className="hero">
           <div className="ar">عَامٌ هِجْرِيٌّ جَدِيد</div>
           <h1>
-            Send the gift of <em>knowledge</em> this New Year.
+            Send the gift of <em>knowledge</em> this Muharram.
           </h1>
           <p>
             The book <b>Muharram</b> and 30 days of True ILM Pro, completely free.

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 /* Page-level metadata for the New Year "gift of knowledge" flow. metadataBase
    is inherited from the root layout, so relative OG URLs resolve correctly. The
    creator page is a client component, so its share thumbnail lives here. */
-const ogTitle = "Send a Free Gift of Knowledge This New Year";
+const ogTitle = "Send a Free Gift of Knowledge This Muharram";
 const ogImage = `/newyear/gift/og?c=lantern&title=${encodeURIComponent(ogTitle)}`;
 
 export const metadata: Metadata = {

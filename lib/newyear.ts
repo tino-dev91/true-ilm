@@ -18,7 +18,7 @@ export interface NewYearGift {
 }
 
 export const DEFAULT_NOTE =
-  "Wishing you a blessed new Islamic year, may it be filled with beneficial knowledge.";
+  "As the new Islamic year begins, may it be a year filled with beneficial knowledge.";
 
 /** Build the shareable recipient URL for a New Year gift. */
 export function buildGiftUrl(gift: NewYearGift, origin: string): string {
@@ -45,14 +45,14 @@ export function buildShareAction(
   gift: NewYearGift,
   giftUrl: string,
 ): { kind: "href"; href: string } | { kind: "copy"; text: string } {
-  const greeting = `Happy New Islamic Year${gift.to ? `, ${gift.to}` : ""}! I've got a gift for you. The book Muharram and 30 days of True ILM Pro, completely free. Open it here:`;
+  const greeting = `${gift.to ? `${gift.to}, ` : ""}here's a gift for you as we begin the new Islamic year. The book Muharram and 30 days of True ILM Pro, completely free. Open it here:`;
   const message = `${greeting} ${giftUrl}`;
 
   switch (gift.method) {
     case "whatsapp":
       return { kind: "href", href: `https://wa.me/?text=${encodeURIComponent(message)}` };
     case "email": {
-      const subject = `A New Year gift of knowledge for you${gift.to ? `, ${gift.to}` : ""}`;
+      const subject = `A gift of knowledge this Muharram${gift.to ? `, ${gift.to}` : ""}`;
       return {
         kind: "href",
         href: `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`,

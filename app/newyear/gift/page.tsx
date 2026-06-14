@@ -24,8 +24,8 @@ export async function generateMetadata({ searchParams }: { searchParams: SearchP
   const from = (sp.from ?? "").trim();
 
   const title = to
-    ? `${to}, you have a New Year gift of knowledge. Open up!`
-    : "You have a New Year gift of knowledge. Open up!";
+    ? `${to}, you have a gift of knowledge. Open up!`
+    : "You have a gift of knowledge. Open up!";
   const description = from
     ? `${from} sent you the book Muharram and 30 days of True ILM Pro, free. Open it up.`
     : "The book Muharram and 30 days of True ILM Pro, free. Open it up to see what's inside.";
