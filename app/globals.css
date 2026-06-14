@@ -1187,3 +1187,255 @@ button {
   letter-spacing: 1.5px;
   font-size: 17px;
 }
+
+/* ════════════════════════════════════════════════════════════════════ */
+/* NEW ISLAMIC YEAR — "gift of knowledge" additions                       */
+/* ════════════════════════════════════════════════════════════════════ */
+
+/* Card header: replaces the Eid calligraphy with a New Year line. */
+.nyc-head {
+  text-align: center;
+  margin-bottom: 1%;
+}
+.nyc-year {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: min(5.2cqi, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+.nyc-kicker {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: min(2.3cqi, 20px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 1.4%;
+}
+/* Slightly smaller name so the header + name + sender clear the gift box. */
+.nyc-name {
+  margin-top: 4%;
+  font-size: min(7cqi, 62px);
+}
+
+/* What's included (creator page) */
+.included {
+  margin-bottom: 8px;
+}
+.phone .included {
+  padding: 0 22px;
+  margin-top: 22px;
+}
+.included-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin: 0 0 14px;
+}
+.included-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.included-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.included-check {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  margin-top: 1px;
+}
+.included-h {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.included-p {
+  font-size: 13.5px;
+  color: var(--text-mid);
+  line-height: 1.45;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* Hadith picker (creator page) */
+.hadith-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hadith-opt {
+  text-align: left;
+  background: #fbf5e3;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 15px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--navy);
+  transition: border-color 0.15s, background 0.15s;
+}
+.hadith-opt:hover {
+  border-color: var(--text-mid);
+}
+.hadith-opt.active {
+  border-color: var(--navy);
+  background: var(--cream-soft);
+  box-shadow: 0 0 0 1px var(--navy);
+}
+.hadith-opt-ar {
+  font-family: var(--font-arabic);
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--navy);
+  text-align: right;
+}
+.hadith-opt-en {
+  font-size: 13.5px;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--navy);
+}
+.hadith-opt-own .hadith-opt-en {
+  font-style: normal;
+  font-weight: 800;
+}
+.hadith-opt-src {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--gold-dp);
+  text-transform: uppercase;
+}
+.hadith-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
+}
+.hadith-custom textarea,
+.hadith-custom input {
+  border: 1.5px solid var(--border);
+  background: #fdfaf3;
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--navy);
+  font-weight: 500;
+  line-height: 1.5;
+  outline: none;
+  resize: vertical;
+}
+.hadith-custom textarea:focus,
+.hadith-custom input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(234, 192, 96, 0.2);
+}
+.hadith-custom textarea::placeholder,
+.hadith-custom input::placeholder {
+  color: #b5ae9c;
+  font-weight: 500;
+}
+
+/* Attached-hadith preview (under the card in the creator stage) */
+.attached-hadith {
+  margin: 18px auto 0;
+  max-width: 460px;
+  text-align: center;
+  padding: 14px 20px;
+  background: var(--cream-soft);
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+}
+.attached-hadith-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold-dp);
+  margin-bottom: 8px;
+}
+.attached-hadith-ar {
+  font-family: var(--font-arabic);
+  font-size: 21px;
+  line-height: 1.7;
+  color: var(--navy);
+  margin: 0 0 6px;
+}
+.attached-hadith-en {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.5;
+}
+.attached-hadith-src {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--gold-dp);
+  text-transform: uppercase;
+  margin: 7px 0 0;
+}
+
+/* Hadith reveal card (receiver page) — navy to stand apart from the note. */
+.hadith-card {
+  margin: 16px 22px 0;
+  padding: 20px 22px;
+  background: var(--navy);
+  color: var(--cream);
+  border-radius: 14px;
+  position: relative;
+}
+.hadith-card-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 12px;
+}
+.hadith-card-ar {
+  font-family: var(--font-arabic);
+  font-size: 23px;
+  line-height: 1.85;
+  color: var(--cream);
+  margin: 0 0 12px;
+  text-align: right;
+}
+.hadith-card-en {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--cream);
+  margin: 0;
+}
+.hadith-card-src {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gold);
+  margin: 12px 0 0;
+}
+.recv-page-d .hadith-card {
+  margin: 0 0 28px;
+  max-width: 520px;
+}
