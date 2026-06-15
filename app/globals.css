@@ -1192,10 +1192,15 @@ button {
 /* NEW ISLAMIC YEAR — "gift of knowledge" additions                       */
 /* ════════════════════════════════════════════════════════════════════ */
 
+/* New Year card: a touch more breathing room up top for the date/header, and
+   the name + sender pulled down so the block reads more centred over the card. */
+.nyc-content {
+  padding-top: 10%;
+}
 /* Card header: replaces the Eid calligraphy with a New Year line. */
 .nyc-head {
   text-align: center;
-  margin-bottom: 1%;
+  margin-bottom: 2.5%;
 }
 .nyc-year {
   font-family: var(--font-display);
@@ -1203,6 +1208,7 @@ button {
   font-size: min(5.2cqi, 46px);
   line-height: 1.1;
   letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 .nyc-kicker {
   font-family: var(--font-body);
@@ -1210,11 +1216,11 @@ button {
   font-size: min(2.3cqi, 20px);
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-top: 1.4%;
+  margin-top: 2.4%;
 }
 /* Slightly smaller name so the header + name + sender clear the gift box. */
 .nyc-name {
-  margin-top: 4%;
+  margin-top: 11%;
   font-size: min(7cqi, 62px);
 }
 
@@ -1234,7 +1240,23 @@ button {
   color: var(--navy);
   margin: 0 0 14px;
 }
+.included-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.included-book {
+  flex: 0 0 auto;
+  width: 116px;
+  height: auto;
+  border-radius: 7px;
+  box-shadow: 0 10px 24px rgba(10, 17, 41, 0.22);
+}
+.phone .included-book {
+  width: 104px;
+}
 .included-grid {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1438,4 +1460,23 @@ button {
 .recv-page-d .hadith-card {
   margin: 0 0 28px;
   max-width: 520px;
+}
+
+/* Muharram book cover, featured in the "what's inside" / claim area. */
+.recv-book {
+  display: flex;
+  justify-content: center;
+  padding: 0 22px;
+  margin: 4px 0 18px;
+}
+.recv-book-img {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 14px 32px rgba(10, 17, 41, 0.26);
+}
+.recv-page-d .recv-book {
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0 0 24px;
 }

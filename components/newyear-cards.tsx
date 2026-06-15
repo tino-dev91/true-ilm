@@ -94,7 +94,7 @@ function CardContent({
 }) {
   const ov = OVERLAY_COLORS[id];
   return (
-    <div className="card-content">
+    <div className="card-content nyc-content">
       <div className="nyc-head">
         <div className="nyc-year" style={{ color: ov.color }}>
           1 Muharram 1448

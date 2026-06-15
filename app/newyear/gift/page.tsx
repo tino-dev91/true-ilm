@@ -79,6 +79,19 @@ export default async function NewYearGiftPage({ searchParams }: { searchParams: 
     </>
   );
 
+  const bookFeature = (
+    <div className="recv-book">
+      <Image
+        className="recv-book-img"
+        src="/muharram-book.png"
+        alt="A Journey through Muharram: The Month of Allah"
+        width={600}
+        height={830}
+        priority
+      />
+    </div>
+  );
+
   const hadithCard = (
     <div className="hadith-card">
       <div className="hadith-card-label">A hadith on seeking knowledge</div>
@@ -120,6 +133,7 @@ export default async function NewYearGiftPage({ searchParams }: { searchParams: 
             {hadithCard}
 
             <div className="ds-label">What&apos;s inside</div>
+            {bookFeature}
             <div className="recv-stats">{stats}</div>
 
             <div className="recv-claim">
@@ -184,6 +198,7 @@ export default async function NewYearGiftPage({ searchParams }: { searchParams: 
           <div className="secLabel" style={{ textAlign: "center", margin: "22px 22px 12px" }}>
             What&apos;s inside
           </div>
+          {bookFeature}
           <div className="recv-stats">{stats}</div>
 
           <div className="recv-cta">

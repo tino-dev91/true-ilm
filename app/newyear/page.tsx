@@ -163,16 +163,25 @@ export default function NewYear() {
   const included = (
     <div className="included">
       <div className="included-title">What&apos;s included</div>
-      <div className="included-grid">
-        {INCLUDED.map((it) => (
-          <div className="included-item" key={it.t}>
-            <div className="included-check">✓</div>
-            <div>
-              <div className="included-h">{it.t}</div>
-              <div className="included-p">{it.s}</div>
+      <div className="included-body">
+        <Image
+          className="included-book"
+          src="/muharram-book.png"
+          alt="A Journey through Muharram: The Month of Allah"
+          width={600}
+          height={830}
+        />
+        <div className="included-grid">
+          {INCLUDED.map((it) => (
+            <div className="included-item" key={it.t}>
+              <div className="included-check">✓</div>
+              <div>
+                <div className="included-h">{it.t}</div>
+                <div className="included-p">{it.s}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
