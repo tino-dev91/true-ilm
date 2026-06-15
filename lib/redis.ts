@@ -13,3 +13,13 @@ export function getRedis(): Redis | null {
 export const SHARE_METHODS = ["whatsapp", "email", "link"] as const;
 export const CARD_KEYS = ["lantern", "skyline", "ornament"] as const;
 export const SHARE_SOURCES = ["direct", "ref", "ref_claim"] as const;
+
+/* Counters are namespaced per campaign so each gift flow has its own stats.
+   Eid is intentionally unprefixed to preserve the existing keys and accumulated
+   data; new campaigns get a "<campaign>:" prefix. */
+export const CAMPAIGNS = ["eid", "newyear"] as const;
+export type Campaign = (typeof CAMPAIGNS)[number];
+
+export function campaignPrefix(campaign: string | null | undefined): string {
+  return campaign === "newyear" ? "newyear:" : "";
+}

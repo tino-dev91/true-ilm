@@ -7,8 +7,9 @@ import { ArrowIcon } from "./icons";
 const CLAIM_URL = "https://4711657.redirect.appmetrica.yandex.com/paywall/eid_30_days?appmetrica_tracking_id=1038659881009228825&referrer=reattribution%3D1";
 
 /* "Claim your free month" — fires a custom analytics event on click, then opens
-   the app deep link. */
-export function ClaimButton({ card }: { card: string }) {
+   the app deep link. `campaign` namespaces the counter (omit for Eid). */
+export function ClaimButton({ card, campaign }: { card: string; campaign?: string }) {
+  const extra: Record<string, string> = campaign ? { campaign } : {};
   return (
     <a
       className="recv-cta-btn"
@@ -16,8 +17,8 @@ export function ClaimButton({ card }: { card: string }) {
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => {
-        track("claim_free_month", { card });
-        logEvent("claim_free_month", { card });
+        track("claim_free_month", { card, ...extra });
+        logEvent("claim_free_month", { card, ...extra });
         try {
           localStorage.setItem("tilm_claimed", "1");
         } catch {

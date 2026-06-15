@@ -6,10 +6,10 @@ export const metadata = { robots: { index: false, follow: false } };
 
 type SearchParams = Promise<{ key?: string }>;
 
-export default async function StatsPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function NewYearStatsPage({ searchParams }: { searchParams: SearchParams }) {
   const { key } = await searchParams;
   // Private: only viewable with the correct ?key=… (STATS_KEY env). Blocked if unset.
   if (!process.env.STATS_KEY || key !== process.env.STATS_KEY) notFound();
 
-  return <GiftStats prefix="" label="True ILM Eid gift" />;
+  return <GiftStats prefix="newyear:" label="True ILM Muharram gift" />;
 }

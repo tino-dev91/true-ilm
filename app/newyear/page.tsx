@@ -107,8 +107,8 @@ export default function NewYear() {
       return;
     }
     if (!namesFilled) return;
-    track("gift_share", { method: gift.method, card: gift.card, source });
-    logEvent("gift_share", { method: gift.method, card: gift.card, source });
+    track("gift_share", { method: gift.method, card: gift.card, source, campaign: "newyear" });
+    logEvent("gift_share", { method: gift.method, card: gift.card, source, campaign: "newyear" });
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = buildGiftUrl(gift, origin);
     setGiftUrl(url);

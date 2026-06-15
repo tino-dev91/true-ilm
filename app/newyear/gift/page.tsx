@@ -123,7 +123,7 @@ export default async function NewYearGiftPage({ searchParams }: { searchParams: 
             <div className="recv-stats">{stats}</div>
 
             <div className="recv-claim">
-              <ClaimButton card={card} />
+              <ClaimButton card={card} campaign="newyear" />
               <Link className="recv-cta-btn outline" href="/newyear?ref=g">
                 Send your own gift
               </Link>
@@ -187,7 +187,7 @@ export default async function NewYearGiftPage({ searchParams }: { searchParams: 
           <div className="recv-stats">{stats}</div>
 
           <div className="recv-cta">
-            <ClaimButton card={card} />
+            <ClaimButton card={card} campaign="newyear" />
             <Link className="recv-cta-btn outline" href="/newyear?ref=g">
               Send your own gift
             </Link>
